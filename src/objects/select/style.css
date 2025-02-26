@@ -1,0 +1,8 @@
+select {
+  border-top:none;
+  border-bottom:1px solid black;
+  border-left:none;
+  border-right:none;
+  cursor:pointer;
+  background: none;
+}

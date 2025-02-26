@@ -1,0 +1,27 @@
+#staff{
+  display: flex;
+  flex-direction: row;
+}
+ul{
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+
+  flex-direction: column;
+  text-align: left;
+}
+
+td{
+  text-align: left;
+}
+
+section{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.off{
+  display:none;
+}
