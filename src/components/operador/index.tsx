@@ -24,7 +24,7 @@ const [respostas, setRespostas] = useState({
       [pergunta]: { comentar: comentario, nota: nota }
     }));
   };
-    const api = 'http://127.0.0.1:5000/api/';
+    const api = 'http://10.98.14.42/playground1/api/';
 const perguntas1 = [
     'Clareza na comunicação e orientação da equipe',
     'Disponibilidade para ouvir e dar suporte',

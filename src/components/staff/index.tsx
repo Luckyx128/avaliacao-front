@@ -36,7 +36,7 @@ function Staff(props: StaffProps) {
       [pergunta]: { comentar: comentario, nota: nota }
     }));
   };
-  const api = 'http://127.0.0.1:5000/api/';
+  const api = 'http://10.98.14.42/playground1/api/';
 
   const perguntas1 = [
     'Comprometimento com metas e prazos',

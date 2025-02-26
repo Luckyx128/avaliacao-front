@@ -32,7 +32,7 @@ function Dashboard() {
     if(!cookies.nome){
         window.location.href = '/';
     }
-  const api = 'http://127.0.0.1:5000/api/';
+  const api = 'http://10.98.14.42/playground1/api/';
   useEffect(() => {
     fetch(`${api}subordinates?cargo=${logado.cargo}&login=${logado.login}&matricula=${logado.matricula}`)
       .then(response => response.json())

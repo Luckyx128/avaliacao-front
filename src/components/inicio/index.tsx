@@ -7,7 +7,7 @@ function Inicio() {
     const [cookies, setCookie] = useCookies(['nome', 'cargo', 'login', 'matricula', 'super', 'gestor']);
   const [logar, setLogar] = useState(true);
 
-  const api = 'http://127.0.0.1:5000/api/';
+  const api = 'http://10.98.14.42/playground1/api/';
 
   // @ts-expect-error event is no type
     const submitHandler = (event) => {
