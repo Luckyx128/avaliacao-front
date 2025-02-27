@@ -1,10 +1,10 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, href, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Dashboard from './components/dashboard';
 import Inicio from './components/inicio';
 import {CookiesProvider} from 'react-cookie';
 function App() {
-
+  console.log(location.href);
   return (
     <BrowserRouter>
     <CookiesProvider>
