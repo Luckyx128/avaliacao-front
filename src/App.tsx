@@ -10,8 +10,8 @@ function App() {
     <CookiesProvider>
       <Routes>
 
-        <Route path="/playground3/" element={<Inicio/>} />
-        <Route path="/playground3/dashboard" element={<Dashboard /> } />
+        <Route path="/" element={<Inicio/>} />
+        <Route path="/dashboard" element={<Dashboard /> } />
       </Routes>
       {/* <Inicio /> */}
     </CookiesProvider>
