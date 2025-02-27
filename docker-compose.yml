@@ -5,5 +5,4 @@ services:
       - "5004:8080"
     volumes:
       - .:/app
-    environment:
       
