@@ -1,0 +1,9 @@
+services:
+  pagina:  
+    build: .
+    ports:
+      - "5004:8080"
+    volumes:
+      - .:/app
+    environment:
+      

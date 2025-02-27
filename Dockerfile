@@ -17,7 +17,7 @@ RUN npm run build
 
 
 # Expor a porta usada pela aplicação React
-EXPOSE 5002
+EXPOSE 8080
 
 # Rodar a aplicação
 CMD ["npm","run", "preview"]
