@@ -6,12 +6,12 @@ import {CookiesProvider} from 'react-cookie';
 function App() {
   console.log(location.href);
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/playground4'>
     <CookiesProvider>
       <Routes>
 
-        <Route path="/playground4/" element={<Inicio/>} />
-        <Route path="/playground4/dashboard" element={<Dashboard /> } />
+        <Route path="/" element={<Inicio/>} />
+        <Route path="/dashboard" element={<Dashboard /> } />
       </Routes>
       {/* <Inicio /> */}
     </CookiesProvider>
