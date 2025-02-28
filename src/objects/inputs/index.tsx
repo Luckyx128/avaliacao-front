@@ -10,6 +10,7 @@ interface InputInicioProps {
   id: string;
   type: string;
   name: string;
+  placeholder: string;
 }
 
 function Input(props: InputProps) {
@@ -38,6 +39,7 @@ function InputInicio(props: InputInicioProps) {
      <input
        type={props.type}
        name={props.name}
+       placeholder={props.placeholder}
        id={props.id}
      />
    </>

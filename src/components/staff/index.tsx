@@ -1,9 +1,9 @@
 
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { Input } from '../../objects/inputs';
 import Table from '../../objects/tables';
 import './style.css';
-import { useCookies}  from 'react-cookie';
 
 interface StaffProps {
   nome: string;

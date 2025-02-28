@@ -31,7 +31,7 @@ function Inicio() {
           setCookie('matricula', data.data.matricula, { path: '/' , 'maxAge': 100000});
           setCookie('super', data.data.super, { path: '/' , 'maxAge': 100000});
           setCookie('gestor', data.data.gestor, { path: '/' , 'maxAge': 100000});
-            window.location.href = '/dashboard';
+            window.location.href = '/playground4/dashboard';
       }else{
         console.log('Login failed');
       }
@@ -45,10 +45,11 @@ function Inicio() {
     return (
       <div>
         <form onSubmit={submitHandler} id="login-form" method="post">
-            <InputInicio  id="matricula-plansul" name="username" type="text" label="Matrícula Plansul:"/>
-            <InputInicio  id="senha" name="password" type="password" label="Senha:"/>
+            <h1>Auto Avaliação</h1>
+            <InputInicio placeholder="Matricula plansul"   id="matricula-plansul" name="username" type="text" label="Matrícula Plansul:"/>
+            <InputInicio placeholder="Senha" id="senha" name="password" type="password" label="Senha:"/>
             <small onClick={() => setLogar(false)}>Esqueceu sua senha?</small>
-          <button type="submit">Enviar</button>
+          <button className={'btn_inicio'} type="submit">Enviar</button>
         </form>
       </div>
     );
@@ -56,11 +57,11 @@ function Inicio() {
     return (
       <div>
         <form onSubmit={submitHandler} id="register-form" method="post">
-            <InputInicio  id="matricula-plansul" name="username" type="text" label="Matrícula Plansul:"/>
-             <InputInicio  id="cpf-plansul" name="cpf" type="text" label="CPF:"/>
-            <InputInicio  id="senha" name="password" type="password" label="Senha:"/>
+            <InputInicio  placeholder="Matricula plansul" id="matricula-plansul" name="username" type="text" label="Matrícula Plansul:"/>
+            <InputInicio  placeholder="CPF" id="cpf-plansul" name="cpf" type="text" label="CPF:"/>
+            <InputInicio  placeholder="Senha" id="senha" name="password" type="password" label="Senha:"/>
             <small onClick={() => setLogar(true)}>Já possui conta?</small>
-          <button type="submit">Cadastrar</button>
+          <button className={'btn_inicio'} type="submit">Cadastrar</button>
         </form>
       </div>
     );

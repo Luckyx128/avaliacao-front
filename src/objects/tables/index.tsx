@@ -1,4 +1,4 @@
-
+import  './style.css';
 
 interface tabelaProps {
   perguntas: string[];
@@ -17,7 +17,7 @@ function Table(props :tabelaProps) {
     props.onRespostaChange(pergunta, comentario, nota);
   };
   return (
-    <table>
+    <table >
       <thead>
         <tr>
           <th>Critério</th>
@@ -29,10 +29,10 @@ function Table(props :tabelaProps) {
         {props.perguntas.map((pergunta:string,index:number) => (
           <tr key={index}>
             <td>{pergunta}</td>
-            <td><input type="number" min="1" max="5" 
+            <td><input type="number" min="1" max="5"
             onChange={(e) => handleNotaChange(pergunta, parseInt(e.target.value))}/></td>
             <td>
-              <input type="text" 
+              <input type="text"
               onChange={(e) => handleComentarioChange(pergunta, e.target.value)}/></td>
           </tr>
         ))}

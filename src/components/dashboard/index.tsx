@@ -1,20 +1,40 @@
-import { useEffect, useState } from 'react';
-import Modal from '../../objects/modal';
-import Staff from '../staff';
-import './style.css'
+import { useEffect, useState } from "react";
+import Modal from "../../objects/modal";
+import Staff from "../staff";
+import "./style.css";
 import Operador from "../operador";
-import {useCookies} from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 function Dashboard() {
-    const [cookies] = useCookies(['nome', 'cargo', 'login', 'matricula', 'super', 'gestor']);
-    const [logado] = useState({nome:cookies.nome,matricula: cookies.matricula,  login: cookies.login,cargo: cookies.cargo, super: cookies.super, gestor: cookies.gestor});
-  const [subordinados, setSubordinados] = useState([{'avaliacao':false, 'nome':'', 'matricula':0}]);
+  const [cookies] = useCookies([
+    "nome",
+    "cargo",
+    "login",
+    "matricula",
+    "super",
+    "gestor",
+  ]);
+  const [logado] = useState({
+    nome: cookies.nome,
+    matricula: cookies.matricula,
+    login: cookies.login,
+    cargo: cookies.cargo,
+    super: cookies.super,
+    gestor: cookies.gestor,
+  });
+  const [subordinados, setSubordinados] = useState([
+    { avaliacao: false, nome: "", matricula: 0 },
+  ]);
+
   const [modal_avaliacao, setModalAvaliacao] = useState(false);
-  const [nomeAlvo, setNomeAlvo] = useState('');
+  const [nomeAlvo, setNomeAlvo] = useState("");
   const [matriculaAlvo, setMatriculaAlvo] = useState(0);
-  const [mes, setMes] = useState('');
+  const [mes, setMes] = useState("");
   // const [ano, setAno] = useState('');
-  const [avaliacoes, setAvaliacoes] = useState({'media_das_notas':0.0,'notas_media_por_questao':{"Alcance de metas e produtividade da equipe": 0,
+  const [avaliacoes, setAvaliacoes] = useState({
+    media_das_notas: 0.0,
+    notas_media_por_questao: {
+      "Alcance de metas e produtividade da equipe": 0,
       "Capacidade de adaptação e mudança": 0,
       "Capacidade de inovação e melhorias nos processos": 0,
       "Capacidade de liderança e gestão de equipes": 0,
@@ -26,96 +46,150 @@ function Dashboard() {
       "Organização e planejamento estratégico": 0,
       "Relacionamento interpessoal": 0,
       "Resolução de problemas e tomada de decisões": 0,
-      "Trabalho em equipe e colaboração": 0
-}});
+      "Trabalho em equipe e colaboração": 0,
+    },
+  });
 
-    if(!cookies.nome){
-        window.location.href = '/';
+  const [subordinadosFiltrados, setSubordinadosFiltrados] = useState([
+    { avaliacao: false, nome: "", matricula: 0 },
+  ]);
+
+  const filtrar = (value: string) => {
+    setSubordinadosFiltrados(
+      subordinados.filter((sub) =>
+        sub.nome.toLowerCase().includes(value.toLowerCase()),
+      ),
+    );
+    if (
+      subordinadosFiltrados.length === 0 ||
+      subordinadosFiltrados[0].nome === "Nenhum nome correspondente encontrado"
+    ) {
+      setSubordinadosFiltrados([
+        {
+          avaliacao: true,
+          nome: "Nenhum nome correspondente encontrado",
+          matricula: 0,
+        },
+      ]);
     }
-  const api = 'http://172.32.1.81/playground1/api/';
+    if (value === "") {
+      setSubordinadosFiltrados(subordinados);
+    }
+  };
+
+  if (!cookies.nome) {
+    window.location.href = "/";
+  }
+  const api = "http://172.32.1.81/playground1/api/";
   useEffect(() => {
-    fetch(`${api}subordinates?cargo=${logado.cargo}&login=${logado.login}&matricula=${logado.matricula}`)
-      .then(response => response.json())
-      .then(data =>{
+    fetch(
+      `${api}subordinates?cargo=${logado.cargo}&login=${logado.login}&matricula=${logado.matricula}`,
+    )
+      .then((response) => response.json())
+      .then((data) => {
         setSubordinados(data.data);
+        setSubordinadosFiltrados(data.data);
         setMes(data.mes);
         // setAno(data.ano);
       });
-      fetch(`${api}avaliacoes?cargo=${logado.cargo}&login=${logado.login}&matricula=${logado.matricula}`)
-      .then(response => response.json())
-      .then(data =>{
-
+    fetch(
+      `${api}avaliacoes?cargo=${logado.cargo}&login=${logado.login}&matricula=${logado.matricula}`,
+    )
+      .then((response) => response.json())
+      .then((data) => {
         setAvaliacoes(data.data);
       });
   }, []);
 
-
+  console.log(logado.cargo);
   return (
     <div>
-      <h1>Bem-vindo! {logado.nome}</h1>
-      <h1>{mes}</h1>
-      <h1>Pendentes: {subordinados.length}</h1>
+      <h5>Bem-vindo! {logado.nome}</h5>
+      <h5>{mes}</h5>
+      <h5>Pendentes: {subordinados.length}</h5>
 
+      <main>
+        {logado.cargo != "14936" && logado.cargo != "1066" ? (
+          <div className="pai-cards">
+            <span className="card">{avaliacoes.media_das_notas}</span>
+            <span className="card">
+              {
+                avaliacoes.notas_media_por_questao[
+                  "Alcance de metas e produtividade da equipe"
+                ]
+              }
+            </span>
+            <span className="card">
+              {
+                avaliacoes.notas_media_por_questao[
+                  "Capacidade de adaptação e mudança"
+                ]
+              }
+            </span>
+            <span className="card">
+              {
+                avaliacoes.notas_media_por_questao[
+                  "Capacidade de inovação e melhorias nos processos"
+                ]
+              }
+            </span>
+          </div>
+        ) : null}
 
-        <main>
-            {logado.cargo != '14936' && logado.cargo != '1066' ?
-
-
-            <div>
-                <h5>Nota media geral:  {avaliacoes.media_das_notas}</h5>
-          <h5>Alcance de metas e produtividade da equipe {avaliacoes.notas_media_por_questao['Alcance de metas e produtividade da equipe']}</h5>
-          <h5>Capacidade de adaptação e mudança {avaliacoes.notas_media_por_questao['Capacidade de adaptação e mudança']}</h5>
-          <h5>Capacidade de inovação e melhorias nos processos {avaliacoes.notas_media_por_questao['Capacidade de inovação e melhorias nos processos']}</h5>
-          <h5>Capacidade de liderança e gestão de equipes {avaliacoes.notas_media_por_questao['Capacidade de liderança e gestão de equipes']}</h5>
-          <h5>Capacidade de solucionar conflitos internos {avaliacoes.notas_media_por_questao['Capacidade de solucionar conflitos internos']}</h5>
-          <h5>Comprometimento com metas e prazos {avaliacoes.notas_media_por_questao['Comprometimento com metas e prazos']}</h5>
-          <h5>Comunicação clara e objetiva {avaliacoes.notas_media_por_questao['Comunicação clara e objetiva']}</h5>
-          <h5>Gestão eficiente do time e delegação de tarefas {avaliacoes.notas_media_por_questao['Gestão eficiente do time e delegação de tarefas']}</h5>
-          <h5>Iniciativa e proatividade {avaliacoes.notas_media_por_questao['Iniciativa e proatividade']}</h5>
-          <h5>Organização e planejamento estratégico {avaliacoes.notas_media_por_questao['Organização e planejamento estratégico']}</h5>
-          <h5>Relacionamento interpessoal {avaliacoes.notas_media_por_questao['Relacionamento interpessoal']}</h5>
-          <h5>Resolução de problemas e tomada de decisões {avaliacoes.notas_media_por_questao['Resolução de problemas e tomada de decisões']}</h5>
-          <h5>Trabalho em equipe e colaboração {avaliacoes.notas_media_por_questao['Trabalho em equipe e colaboração']}</h5>
-
-      </div>
-            :null}
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Mes</th>
-            <th>Ação/Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {subordinados.map((matricula) => (
-
-            <tr key={matricula.matricula}>
-              <td>{matricula.nome}</td>
-              <td>Fevereiro</td>
-              <td>
-              {matricula.avaliacao ? "Avaliado" :
-               <button onClick={() => {
-                setNomeAlvo(matricula.nome);
-                setMatriculaAlvo(matricula.matricula);
-                setModalAvaliacao(true)}}
-                >Avaliar</button>}
-
-                </td>
-
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => filtrar(e.target.value)}
+        />
+        <table className={"lista-colab"}>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Mes</th>
+              <th>Ação/Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {subordinadosFiltrados.map((matricula) => (
+              <tr key={matricula.matricula}>
+                <td>{matricula.nome}</td>
+                <td>{mes}</td>
+                <td>
+                  {matricula.avaliacao ? (
+                    <button className={"avaliado"}>Avaliado</button>
+                  ) : (
+                    <button
+                      className={"avaliar"}
+                      onClick={() => {
+                        setNomeAlvo(matricula.nome);
+                        setMatriculaAlvo(matricula.matricula);
+                        setModalAvaliacao(true);
+                      }}
+                    >
+                      Avaliar
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </main>
-        {logado.cargo != '14936' && logado.cargo != '1066' ?
-            <Modal isOpen={modal_avaliacao} onClose={() => setModalAvaliacao(false)} children={<Staff matricula={matriculaAlvo} nome={nomeAlvo} />} />
-            :
-            <Modal isOpen={modal_avaliacao} onClose={() => setModalAvaliacao(false)} children={<Operador matricula={matriculaAlvo} nome={nomeAlvo} />} />
-        }
-        </div>
+      {logado.cargo != "14936" && logado.cargo != "1066" ? (
+        <Modal
+          isOpen={modal_avaliacao}
+          onClose={() => setModalAvaliacao(false)}
+          children={<Staff matricula={matriculaAlvo} nome={nomeAlvo} />}
+        />
+      ) : (
+        <Modal
+          isOpen={modal_avaliacao}
+          onClose={() => setModalAvaliacao(false)}
+          children={<Operador matricula={matriculaAlvo} nome={nomeAlvo} />}
+        />
+      )}
+    </div>
   );
 }
-
 
 export default Dashboard;
