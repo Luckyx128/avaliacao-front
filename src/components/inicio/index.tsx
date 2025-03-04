@@ -19,6 +19,7 @@ function Inicio() {
   // @ts-expect-error event is no type
   const submitHandler = (event) => {
     event.preventDefault();
+    console.log(cookies);
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     fetch(`${api}login?username=${data.username}&password=${data.password}`, {
