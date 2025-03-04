@@ -1,4 +1,4 @@
-import './style.css';
+import "./style.css";
 interface InputProps {
   label: string;
   id: string;
@@ -14,14 +14,11 @@ interface InputInicioProps {
 }
 
 function Input(props: InputProps) {
-
-
   return (
     <>
-    <label htmlFor={props.id}>
-      {props.label}
-    </label>
+      <label htmlFor={props.id}>{props.label}</label>
       <input
+        id={props.id}
         type="text"
         onChange={(event) => props.setValue(event.target.value)}
       />
@@ -29,22 +26,18 @@ function Input(props: InputProps) {
   );
 }
 
-
 function InputInicio(props: InputInicioProps) {
   return (
-   <>
-     <label htmlFor={props.id}>
-       {props.label}
-     </label>
-     <input
-       type={props.type}
-       name={props.name}
-       placeholder={props.placeholder}
-       id={props.id}
-     />
-   </>
+    <>
+      <label htmlFor={props.id}>{props.label}</label>
+      <input
+        type={props.type}
+        name={props.name}
+        placeholder={props.placeholder}
+        id={props.id}
+      />
+    </>
   );
 }
-
 
 export { Input, InputInicio };

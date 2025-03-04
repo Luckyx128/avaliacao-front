@@ -30,7 +30,6 @@ function Inicio() {
       .then((response) => response.json())
       .then((data) => {
         if (data.status_code === 200) {
-          console.log(cookies);
           setCookie("nome", data.data.nome, { path: "/", maxAge: 100000 });
           setCookie("cargo", data.data.cargo, { path: "/", maxAge: 100000 });
           setCookie("login", data.data.login, { path: "/", maxAge: 100000 });
@@ -42,7 +41,6 @@ function Inicio() {
           setCookie("gestor", data.data.gestor, { path: "/", maxAge: 100000 });
           window.location.href = "/dashboard";
         } else {
-          console.log("Login failed");
         }
       })
       .catch((error) => console.error(error));

@@ -4,7 +4,6 @@ import Dashboard from "./components/dashboard";
 import Inicio from "./components/inicio";
 import { CookiesProvider } from "react-cookie";
 function App() {
-  console.log(location.href);
   return (
     <BrowserRouter>
       <CookiesProvider>

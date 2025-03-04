@@ -4,7 +4,7 @@ import Staff from "../staff";
 import "./style.css";
 import Operador from "../operador";
 import { useCookies } from "react-cookie";
-
+import ExcelReader from "../../objects/excel";
 function Dashboard() {
   const [cookies] = useCookies([
     "nome",
@@ -49,6 +49,49 @@ function Dashboard() {
       "Resolução de problemas e tomada de decisões": 0.0,
       "Trabalho em equipe e colaboração": 0.0,
     },
+    avaliados: [
+      {
+        ano: "2025",
+        id: 10,
+        matricula: "114467",
+        mes: "Março",
+        negativos: "asdas",
+        positivos: "adsd",
+        respostas: {
+          "Comprometimento com metas e prazos": { comentar: "", nota: 1 },
+          "Capacidade de liderança e gestão de equipes": {
+            comentar: "",
+            nota: 2,
+          },
+          "Comunicação clara e objetiva": { comentar: "", nota: 8 },
+          "Resolução de problemas e tomada de decisões": {
+            comentar: "",
+            nota: 4,
+          },
+          "Trabalho em equipe e colaboração": { comentar: "", nota: 5 },
+          "Relacionamento interpessoal": { comentar: "", nota: 5 },
+          "Capacidade de adaptação e mudança": { comentar: "", nota: 5 },
+          "Iniciativa e proatividade": { comentar: "", nota: 6 },
+          "Alcance de metas e produtividade da equipe": {
+            comentar: "",
+            nota: 1,
+          },
+          "Gestão eficiente do time e delegação de tarefas": {
+            comentar: "",
+            nota: 5,
+          },
+          "Capacidade de solucionar conflitos internos": {
+            comentar: "",
+            nota: 8,
+          },
+          "Organização e planejamento estratégico": { comentar: "", nota: 5 },
+          "Capacidade de inovação e melhorias nos processos": {
+            comentar: "",
+            nota: 5,
+          },
+        },
+      },
+    ],
   });
 
   const [subordinadosFiltrados, setSubordinadosFiltrados] = useState([
@@ -104,7 +147,6 @@ function Dashboard() {
       });
   }, []);
 
-  console.log(logado.cargo);
   return (
     <div>
       <h4>Bem-vindo! {logado.nome}</h4>
@@ -112,6 +154,8 @@ function Dashboard() {
       <h4>Todal: {subordinados.length}</h4>
 
       <main>
+        <ExcelReader avaliados={avaliacoes.avaliados} />
+
         {logado.cargo != "14936" && logado.cargo != "1066" ? (
           <>
             <span className="card geral" onClick={() => setCardOpen(!cardOpen)}>
