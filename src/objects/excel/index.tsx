@@ -1,68 +1,67 @@
 import * as XLSX from "xlsx";
 import "./style.css";
 interface ExcelProps {
-  avaliados: [
-    {
-      ano: string;
-      id: number;
-      matricula: string;
-      mes: string;
-      negativos: string;
-      positivos: string;
-      respostas: {
-        "Comprometimento com metas e prazos": {
-          comentar: string;
-          nota: number;
-        };
-        "Capacidade de liderança e gestão de equipes": {
-          comentar: string;
-          nota: number;
-        };
-        "Comunicação clara e objetiva": { comentar: string; nota: number };
-        "Resolução de problemas e tomada de decisões": {
-          comentar: string;
-          nota: number;
-        };
-        "Trabalho em equipe e colaboração": {
-          comentar: string;
-          nota: number;
-        };
-        "Relacionamento interpessoal": { comentar: string; nota: number };
-        "Capacidade de adaptação e mudança": {
-          comentar: string;
-          nota: number;
-        };
-        "Iniciativa e proatividade": { comentar: string; nota: number };
-        "Alcance de metas e produtividade da equipe": {
-          comentar: string;
-          nota: number;
-        };
-        "Gestão eficiente do time e delegação de tarefas": {
-          comentar: string;
-          nota: number;
-        };
-        "Capacidade de solucionar conflitos internos": {
-          comentar: string;
-          nota: number;
-        };
-        "Organização e planejamento estratégico": {
-          comentar: string;
-          nota: number;
-        };
-        "Capacidade de inovação e melhorias nos processos": {
-          comentar: string;
-          nota: number;
-        };
+  avaliados: {
+    ano: string;
+    id: number;
+    matricula: string;
+    mes: string;
+    negativos: string;
+    positivos: string;
+    respostas: {
+      "Comprometimento com metas e prazos": {
+        comentar: string;
+        nota: number;
       };
-    },
-  ];
+      "Capacidade de liderança e gestão de equipes": {
+        comentar: string;
+        nota: number;
+      };
+      "Comunicação clara e objetiva": { comentar: string; nota: number };
+      "Resolução de problemas e tomada de decisões": {
+        comentar: string;
+        nota: number;
+      };
+      "Trabalho em equipe e colaboração": {
+        comentar: string;
+        nota: number;
+      };
+      "Relacionamento interpessoal": { comentar: string; nota: number };
+      "Capacidade de adaptação e mudança": {
+        comentar: string;
+        nota: number;
+      };
+      "Iniciativa e proatividade": { comentar: string; nota: number };
+      "Alcance de metas e produtividade da equipe": {
+        comentar: string;
+        nota: number;
+      };
+      "Gestão eficiente do time e delegação de tarefas": {
+        comentar: string;
+        nota: number;
+      };
+      "Capacidade de solucionar conflitos internos": {
+        comentar: string;
+        nota: number;
+      };
+      "Organização e planejamento estratégico": {
+        comentar: string;
+        nota: number;
+      };
+      "Capacidade de inovação e melhorias nos processos": {
+        comentar: string;
+        nota: number;
+      };
+    };
+  }[];
 }
 
 const ExportExcelFromAPI = (props: ExcelProps) => {
   const exportToExcel = () => {
     props.avaliados.forEach((av) => {
       if (typeof av.respostas === "string") {
-        av.respostas = JSON.parse(av.respostas.replace(/'/g, '"'));
+        let resposta: string = av.respostas;
+        av.respostas = JSON.parse(resposta.replace(/'/g, '"'));
       }
     });
 
