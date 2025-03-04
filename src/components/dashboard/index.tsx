@@ -30,23 +30,24 @@ function Dashboard() {
   const [nomeAlvo, setNomeAlvo] = useState("");
   const [matriculaAlvo, setMatriculaAlvo] = useState(0);
   const [mes, setMes] = useState("");
+  const [cardOpen, setCardOpen] = useState(false);
   // const [ano, setAno] = useState('');
   const [avaliacoes, setAvaliacoes] = useState({
     media_das_notas: 0.0,
     notas_media_por_questao: {
-      "Alcance de metas e produtividade da equipe": 0,
-      "Capacidade de adaptação e mudança": 0,
-      "Capacidade de inovação e melhorias nos processos": 0,
-      "Capacidade de liderança e gestão de equipes": 0,
-      "Capacidade de solucionar conflitos internos": 0,
-      "Comprometimento com metas e prazos": 0,
-      "Comunicação clara e objetiva": 0,
-      "Gestão eficiente do time e delegação de tarefas": 0,
-      "Iniciativa e proatividade": 0,
-      "Organização e planejamento estratégico": 0,
-      "Relacionamento interpessoal": 0,
-      "Resolução de problemas e tomada de decisões": 0,
-      "Trabalho em equipe e colaboração": 0,
+      "Alcance de metas e produtividade da equipe": 0.0,
+      "Capacidade de adaptação e mudança": 0.0,
+      "Capacidade de inovação e melhorias nos processos": 0.0,
+      "Capacidade de liderança e gestão de equipes": 0.0,
+      "Capacidade de solucionar conflitos internos": 0.0,
+      "Comprometimento com metas e prazos": 0.0,
+      "Comunicação clara e objetiva": 0.0,
+      "Gestão eficiente do time e delegação de tarefas": 0.0,
+      "Iniciativa e proatividade": 0.0,
+      "Organização e planejamento estratégico": 0.0,
+      "Relacionamento interpessoal": 0.0,
+      "Resolução de problemas e tomada de decisões": 0.0,
+      "Trabalho em equipe e colaboração": 0.0,
     },
   });
 
@@ -97,48 +98,139 @@ function Dashboard() {
     )
       .then((response) => response.json())
       .then((data) => {
-        setAvaliacoes(data.data);
+        if (data.data.media_das_notas !== 0) {
+          setAvaliacoes(data.data);
+        }
       });
   }, []);
 
   console.log(logado.cargo);
   return (
     <div>
-      <h5>Bem-vindo! {logado.nome}</h5>
-      <h5>{mes}</h5>
-      <h5>Pendentes: {subordinados.length}</h5>
+      <h4>Bem-vindo! {logado.nome}</h4>
+      <h4>{mes}</h4>
+      <h4>Todal: {subordinados.length}</h4>
 
       <main>
         {logado.cargo != "14936" && logado.cargo != "1066" ? (
-          <div className="pai-cards">
-            <span className="card">{avaliacoes.media_das_notas}</span>
-            <span className="card">
-              {
-                avaliacoes.notas_media_por_questao[
-                  "Alcance de metas e produtividade da equipe"
-                ]
-              }
+          <>
+            <span className="card geral" onClick={() => setCardOpen(!cardOpen)}>
+              <p>Média geral</p>
+              {avaliacoes.media_das_notas}
             </span>
-            <span className="card">
-              {
-                avaliacoes.notas_media_por_questao[
-                  "Capacidade de adaptação e mudança"
-                ]
-              }
-            </span>
-            <span className="card">
-              {
-                avaliacoes.notas_media_por_questao[
-                  "Capacidade de inovação e melhorias nos processos"
-                ]
-              }
-            </span>
-          </div>
+            <div className={`pai-cards ${cardOpen ? "open" : "close"}`}>
+              <span className="card">
+                <p>Alcance de metas ...</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Alcance de metas e produtividade da equipe"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Adaptabilidade</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Capacidade de adaptação e mudança"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Inovação</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Capacidade de inovação e melhorias nos processos"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Liderança</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Capacidade de liderança e gestão de equipes"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Solução de conflitos</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Capacidade de solucionar conflitos internos"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Metas e prazos</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Comprometimento com metas e prazos"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Comunicação clara e objetiva</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Comunicação clara e objetiva"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Gestão eficiente e delegação de tarefas</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Gestão eficiente do time e delegação de tarefas"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Iniciativa e proatividade</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Iniciativa e proatividade"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Organização e planejamento estratégico</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Organização e planejamento estratégico"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Relacionamento interpessoal</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Relacionamento interpessoal"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Resolução de problemas e tomada de decisões</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Resolução de problemas e tomada de decisões"
+                  ]
+                }
+              </span>
+              <span className="card">
+                <p>Trabalho em equipe e colaboração</p>
+                {
+                  avaliacoes.notas_media_por_questao[
+                    "Trabalho em equipe e colaboração"
+                  ]
+                }
+              </span>
+            </div>
+          </>
         ) : null}
 
         <input
+          className="search-input"
           type="text"
-          placeholder="Search..."
+          placeholder="Procurar colaborador"
           onChange={(e) => filtrar(e.target.value)}
         />
         <table className={"lista-colab"}>

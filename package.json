@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "/playground4",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 8080 --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview --port 8080 --host "
