@@ -1,6 +1,9 @@
 body {
     background: linear-gradient(45deg, #993d04 0%, #011e4c 100%);
 }
+h1 {
+    color: white;
+}
 form {
     display: flex;
     flex-direction: column;
@@ -21,7 +24,7 @@ form p {
 }
 label {
     text-align: center;
-
+    color: white;
     margin-left: auto;
     margin-right: auto;
     font-family: "CAIXA Std";
@@ -47,7 +50,9 @@ label {
     line-height: normal;
     padding-left: 10px;
 }
-
+small {
+    color: white;
+}
 .btn_inicio {
     cursor: pointer;
     margin-top: 2%;
