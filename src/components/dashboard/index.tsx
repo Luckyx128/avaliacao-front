@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import Modal from "../../objects/modal";
 import Staff from "../staff";
-import "./style.css";
 import Operador from "../operador";
+import "./style.css";
 import { useCookies } from "react-cookie";
-import ExcelReader from "../../objects/excel";
+import {
+  ExcelOperador,
+  ExportExcelFromAPI,
+  ExcelPreview,
+} from "../../objects/excel";
+import type { OperadorType } from "../../objects/excel";
 function Dashboard() {
   const [cookies] = useCookies([
     "nome",
@@ -23,10 +28,11 @@ function Dashboard() {
     gestor: cookies.gestor,
   });
   const [subordinados, setSubordinados] = useState([
-    { avaliacao: false, nome: "", matricula: 0 },
+    { avaliacao: false, nome: "", matricula: 0, login: "" },
   ]);
 
   const [modal_avaliacao, setModalAvaliacao] = useState(false);
+  const [modal_excel, setModalExcel] = useState(false);
   const [nomeAlvo, setNomeAlvo] = useState("");
   const [matriculaAlvo, setMatriculaAlvo] = useState(0);
   const [mes, setMes] = useState("");
@@ -54,6 +60,7 @@ function Dashboard() {
         ano: "2025",
         id: 10,
         matricula: "114467",
+        nome: "John Doe",
         mes: "Março",
         negativos: "asdas",
         positivos: "adsd",
@@ -95,9 +102,9 @@ function Dashboard() {
   });
 
   const [subordinadosFiltrados, setSubordinadosFiltrados] = useState([
-    { avaliacao: false, nome: "", matricula: 0 },
+    { avaliacao: false, nome: "", matricula: 0, login: "" },
   ]);
-
+  const [listaAvaliacoes, setListaAvaliacoes] = useState<OperadorType[]>([]);
   const filtrar = (value: string) => {
     setSubordinadosFiltrados(
       subordinados.filter((sub) =>
@@ -113,6 +120,7 @@ function Dashboard() {
           avaliacao: true,
           nome: "Nenhum nome correspondente encontrado",
           matricula: 0,
+          login: "",
         },
       ]);
     }
@@ -124,7 +132,8 @@ function Dashboard() {
   if (!cookies.nome) {
     window.location.href = "/";
   }
-  const api = "http://172.32.1.81/playground1/api/";
+
+  const api = import.meta.env.VITE_HOST_API;
   useEffect(() => {
     fetch(
       `${api}subordinates?cargo=${logado.cargo}&login=${logado.login}&matricula=${logado.matricula}`,
@@ -154,10 +163,13 @@ function Dashboard() {
       <h4>Todal: {subordinados.length}</h4>
 
       <main>
-        <ExcelReader avaliados={avaliacoes.avaliados} />
-
         {logado.cargo != "14936" && logado.cargo != "1066" ? (
           <>
+            <ExportExcelFromAPI
+              nome={logado.nome}
+              avaliados={avaliacoes.avaliados}
+            />
+
             <span className="card geral" onClick={() => setCardOpen(!cardOpen)}>
               <p>Média geral</p>
               {avaliacoes.media_das_notas}
@@ -283,6 +295,9 @@ function Dashboard() {
               <th>Nome</th>
               <th>Mes</th>
               <th>Ação/Status</th>
+              {logado.cargo != "14936" && logado.cargo != "1066" ? (
+                <th>Extrair</th>
+              ) : null}
             </tr>
           </thead>
           <tbody>
@@ -306,17 +321,40 @@ function Dashboard() {
                     </button>
                   )}
                 </td>
+                <td>
+                  {logado.cargo != "14936" && logado.cargo != "1066" ? (
+                    <ExcelOperador
+                      setNomeAlvo={setNomeAlvo}
+                      setModalVisible={setModalExcel}
+                      setListaAvaliacoes={setListaAvaliacoes}
+                      nome={matricula.nome}
+                      login={matricula.login}
+                    />
+                  ) : null}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </main>
       {logado.cargo != "14936" && logado.cargo != "1066" ? (
-        <Modal
-          isOpen={modal_avaliacao}
-          onClose={() => setModalAvaliacao(false)}
-          children={<Staff matricula={matriculaAlvo} nome={nomeAlvo} />}
-        />
+        <>
+          <Modal
+            isOpen={modal_avaliacao}
+            onClose={() => setModalAvaliacao(false)}
+            children={<Staff matricula={matriculaAlvo} nome={nomeAlvo} />}
+          />
+          <Modal
+            isOpen={modal_excel}
+            onClose={() => setModalExcel(false)}
+            children={
+              <ExcelPreview
+                nome={nomeAlvo}
+                lista_avaliacoes={listaAvaliacoes}
+              />
+            }
+          />
+        </>
       ) : (
         <Modal
           isOpen={modal_avaliacao}

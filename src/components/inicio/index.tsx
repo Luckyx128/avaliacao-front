@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import "./style.css";
 
 function Inicio() {
+  // @ts-expect-error somente criacao do cookie
   const [cookies, setCookie] = useCookies([
     "nome",
     "cargo",
@@ -14,12 +15,34 @@ function Inicio() {
   ]);
   const [logar, setLogar] = useState(true);
 
-  const api = "http://172.32.1.81/playground1/api/";
+  const api = import.meta.env.VITE_HOST_API;
+  // @ts-expect-error event is no type
+  const Resete = (event) => {
+    event.preventDefault();
+    if (event.target instanceof HTMLFormElement) {
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData);
+      fetch(`${api}reset?username=${data.username}&password=${data.password}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status_code === 200) {
+            setLogar(true);
+          } else {
+            setLogar(false);
+          }
+        })
+        .catch((error) => console.error(error));
+    }
+  };
 
   // @ts-expect-error event is no type
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(cookies);
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     fetch(`${api}login?username=${data.username}&password=${data.password}`, {
@@ -76,7 +99,7 @@ function Inicio() {
   } else {
     return (
       <div>
-        <form onSubmit={submitHandler} id="register-form" method="post">
+        <form onSubmit={Resete} id="register-form" method="post">
           <InputInicio
             placeholder="Matricula plansul"
             id="matricula-plansul"

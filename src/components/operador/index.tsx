@@ -34,7 +34,7 @@ export default function Operador(props: OperadorProps) {
       [pergunta]: { comentar: comentario, nota: nota },
     }));
   };
-  const api = "http://172.32.1.81/playground1/api/";
+  const api = import.meta.env.VITE_HOST_API;
   const perguntas1 = [
     "Clareza na comunicação e orientação da equipe",
     "Disponibilidade para ouvir e dar suporte",
@@ -46,6 +46,7 @@ export default function Operador(props: OperadorProps) {
     const data = {
       matricula: props.matricula,
       respostas,
+      nome: props.nome,
       positivos,
       negativos,
       cargo: cookies.cargo,
@@ -67,7 +68,6 @@ export default function Operador(props: OperadorProps) {
   return (
     <div>
       <h1>Avaliação de Funcionários</h1>
-      Fevereiro
       <br />
       {props.nome}
       <section>
@@ -75,11 +75,8 @@ export default function Operador(props: OperadorProps) {
           id="matricula"
           className="off"
           name="matricula"
-          value={props.matricula}
+          defaultValue={props.matricula}
         />
-        {/* <Input id="staff-role" label="Cargo:" setValue={setCargo} /> */}
-        <input id="periodo" className="off" name="periodo" value="fevereiro" />
-        {/* <Input id="staff-period" label="Período de Avaliação:" setValue={setPeriodo} /> */}
       </section>
       <Table
         inputclass="tableInput"

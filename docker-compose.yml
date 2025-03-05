@@ -1,8 +1,9 @@
 services:
-  pagina:  
+  pagina:
     build: .
     ports:
       - "5003:8080"
     volumes:
       - .:/app
-      
+    environment:
+      - VITE_HOST_API=http://10.98.14.42/playground1/api/

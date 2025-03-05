@@ -51,7 +51,7 @@ function Staff(props: StaffProps) {
       [pergunta]: { comentar: comentario, nota: nota },
     }));
   };
-  const api = "http://172.32.1.81/playground1/api/";
+  const api = import.meta.env.VITE_HOST_API;
 
   const perguntas1 = [
     "Comprometimento com metas e prazos",
@@ -81,6 +81,7 @@ function Staff(props: StaffProps) {
       negativos,
       cargo: cookies.cargo,
       gestor: cookies.login,
+      nome: props.nome,
     };
 
     fetch(api + "salvar_avaliacao", {
