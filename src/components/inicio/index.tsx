@@ -14,7 +14,8 @@ function Inicio() {
     "gestor",
   ]);
   const [logar, setLogar] = useState(true);
-
+  const [erro, setErro] = useState("");
+  const [erroReset, setErroReset] = useState("");
   const api = import.meta.env.VITE_HOST_API;
   // @ts-expect-error event is no type
   const Resete = (event) => {
@@ -36,7 +37,7 @@ function Inicio() {
             setLogar(false);
           }
         })
-        .catch((error) => console.error(error));
+        .catch(() => setErroReset("Erro ao Resetar"));
     }
   };
 
@@ -65,9 +66,10 @@ function Inicio() {
           setCookie("gestor", data.data.gestor, { path: "/", maxAge: 100000 });
           window.location.href = "/dashboard";
         } else {
+          setErro("Matricula ou senha incorreta");
         }
       })
-      .catch((error) => console.error(error));
+      .catch(() => setErro("Erro ao logar"));
   };
 
   if (logar) {
@@ -93,6 +95,7 @@ function Inicio() {
           <button className={"btn_inicio"} type="submit">
             Enviar
           </button>
+          <p>{erro}</p>
         </form>
       </div>
     );
@@ -125,6 +128,7 @@ function Inicio() {
           <button className={"btn_inicio"} type="submit">
             Cadastrar
           </button>
+          <p>{erroReset}</p>
         </form>
       </div>
     );

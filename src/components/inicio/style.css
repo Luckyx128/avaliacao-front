@@ -15,6 +15,10 @@ form {
     background: rgba(88, 130, 193, 0.1);
     backdrop-filter: blur(12.5px);
 }
+
+form p {
+    color: orange;
+}
 label {
     text-align: center;
 
