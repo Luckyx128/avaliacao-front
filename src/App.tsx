@@ -11,7 +11,6 @@ function App() {
           <Route path="/" element={<Inicio />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
-        {/* <Inicio /> */}
       </CookiesProvider>
     </BrowserRouter>
   );
