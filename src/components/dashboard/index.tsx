@@ -45,7 +45,7 @@ function Dashboard() {
 
   useEffect(() => {
     const date = new Date();
-    setMes(date.toLocaleString('default', { month: 'long' }));
+    setMes(date.toLocaleString('pt-BR', { month: 'long' }));
     const fetchStatusTipo2 = async () => {
       const response = await fetch(`${api}status_mes?matricula=${logado.matricula}&tipo=2&setor=${logado.cargo}`);
       const data: StatusMes = await response.json();
