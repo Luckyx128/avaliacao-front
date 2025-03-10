@@ -1,25 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Swal from 'sweetalert2';
 import './style.css';
 
 interface Pergunta {
     id: number;
-    pergunta: string;
     assunto: string;
-    resposta: number;
+    pergunta: string;
+    resposta?: number;
 }
-const Autoavaliacao = ({ setor }: { setor: string }) => {
-    const [cookies] = useCookies(['matricula', 'gestor','super', 'nome']);
+
+const Lideranca = () => {
+    const [cookies] = useCookies(['matricula', 'gestor', 'super', 'nome', 'cargo']);
     const [perguntas, setPerguntas] = useState<Pergunta[]>([]);
-    const api = import.meta.env.VITE_HOST_API;
     const [comentario, setComentario] = useState('');
     const [positivos, setPositivos] = useState('');
     const [negativos, setNegativos] = useState('');
+    const api = import.meta.env.VITE_HOST_API;
     useEffect(() => {
         const fetchPerguntas = async () => {
             try {
-                const response = await fetch(`${api}questoes?tipo=2&setor=${setor}`);
+                const response = await fetch(`${api}questoes?tipo=1&setor=${cookies.cargo}`);
                 const data = await response.json();
                 const perguntas: Pergunta[] = data.data.perguntas;
                 setPerguntas(perguntas);
@@ -32,11 +33,9 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
     }, []);
 
     const handleRatingChange = (questionId: number, rating: number) => {
-        console.log(questionId, rating);
         setPerguntas(perguntas.map(q =>
             q.id === questionId ? { ...q, resposta: rating } : q
         ));
-        console.log(perguntas);
     };
 
     const handleSubmit = async () => {
@@ -46,7 +45,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
                 text: "Você não poderá alterar suas respostas depois",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6', 
+                confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, enviar!',
                 cancelButtonText: 'Cancelar'
@@ -55,6 +54,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
             if (!result.isConfirmed) {
                 return;
             }
+
             const respostas = perguntas.map(q => ({
                 pergunta_id: q.id,
                 resposta: q.resposta,
@@ -77,17 +77,17 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
 
             Swal.fire({
                 title: 'Sucesso!',
-                text: 'Autoavaliação enviada com sucesso!',
+                text: 'Avaliação de liderança enviada com sucesso!',
                 icon: 'success',
                 confirmButtonColor: '#3085d6'
             }).then(() => {
                 location.reload();
             });
-            
+
         } catch (error) {
             Swal.fire({
                 title: 'Erro!',
-                text: 'Erro ao enviar autoavaliação',
+                text: 'Erro ao enviar avaliação',
                 icon: 'error',
                 confirmButtonColor: '#3085d6'
             });
@@ -97,8 +97,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
     return (
         <div className="autoavaliacao-container">
             <div className="autoavaliacao-content">
-
-                <h1 className="autoavaliacao-title">Autoavaliação</h1>
+                <h1 className="autoavaliacao-title">Avaliação de Liderança</h1>
                 {perguntas.map((pergunta) => (
                     <div key={pergunta.id} className="question-container">
                         <h3>{pergunta.assunto}</h3>
@@ -116,7 +115,8 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
                         </div>
                     </div>
                 ))}
-                <div className="comentario-container">
+
+<div className="comentario-container">
                     <p>Pontos a destacar</p>
                     <input className="comentario-input" type="text" placeholder="Pontos positivos" value={positivos} onChange={(e) => setPositivos(e.target.value)} />
                     <p>Pontos a melhorar</p>
@@ -124,6 +124,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
                     <p>Comentário (Opcional)</p>
                     <textarea className="comentario-input" placeholder="Comentário (Opcional)" value={comentario} onChange={(e) => setComentario(e.target.value)} />
                 </div>
+                
             </div>
             <div className="autoavaliacao-left-sidebar">
                 <div>
@@ -185,4 +186,4 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
     );
 };
 
-export default Autoavaliacao;
+export default Lideranca;

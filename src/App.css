@@ -1,3 +1,20 @@
+:root {
+  /* Cores Principais */
+  --primary: #2C3E50;    /* Azul profundo - cor principal */
+  --secondary: #3498DB;  /* Azul claro - ações e destaques */
+  
+  /* Cores de Suporte */
+  --success: #27AE60;    /* Verde - feedback positivo */
+  --warning: #F1C40F;    /* Amarelo - alertas */
+  --danger: #E74C3C;     /* Vermelho - erros/negativos */
+  
+  /* Tons Neutros */
+  --background: #F8FAFC;  /* Fundo claro */
+  --surface: #FFFFFF;    /* Superfícies de cards */
+  --text: #2C3E50;       /* Texto principal */
+  --text-light: #95A5A6; /* Texto secundário */
+}
+
 #root {
   width: 100vw;
   height: 100vh;

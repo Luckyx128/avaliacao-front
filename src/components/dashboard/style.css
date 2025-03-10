@@ -74,7 +74,7 @@ h4 {
     justify-content: start;
     align-items: center;
     width: 100vw;
-    height: 100%;
+    height: 90%;
 }
 
 .content {
@@ -92,4 +92,35 @@ h4 {
     margin: 0;
     padding: 0;
     color: #a3a3a3;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.evaluation-card {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.evaluation-card:hover {
+    transform: translateY(-4px);
 }
