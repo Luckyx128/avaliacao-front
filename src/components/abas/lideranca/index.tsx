@@ -116,7 +116,7 @@ const Lideranca = () => {
                     </div>
                 ))}
 
-<div className="comentario-container">
+                <div className="comentario-container">
                     <p>Pontos a destacar</p>
                     <input className="comentario-input" type="text" placeholder="Pontos positivos" value={positivos} onChange={(e) => setPositivos(e.target.value)} />
                     <p>Pontos a melhorar</p>
@@ -124,12 +124,12 @@ const Lideranca = () => {
                     <p>Comentário (Opcional)</p>
                     <textarea className="comentario-input" placeholder="Comentário (Opcional)" value={comentario} onChange={(e) => setComentario(e.target.value)} />
                 </div>
-                
+
             </div>
             <div className="autoavaliacao-left-sidebar">
                 <div>
                     <span>
-                        <h1>Respondidas</h1>
+                        <h1>Avaliação de Liderança</h1>
                         <div style={{
                             position: 'relative',
                             width: '150px',
@@ -153,7 +153,7 @@ const Lideranca = () => {
                                 />
                                 <circle
                                     cx="75"
-                                    cy="75" 
+                                    cy="75"
                                     r="70"
                                     stroke={perguntas.filter(q => q.resposta).length === perguntas.length ? '#4CAF50' : '#ddd'}
                                     strokeWidth="4"
@@ -169,7 +169,9 @@ const Lideranca = () => {
                                 transform: 'translate(-50%, -50%)',
                                 textAlign: 'center'
                             }}>
-                                <h2 id="respostas-count">{perguntas.filter(q => q.resposta).length}/{perguntas.length}</h2>
+                                <h2 id="respostas-count">
+                                    {Math.round((perguntas.filter(q => q.resposta).length / perguntas.length) * 100)}%
+                                </h2>
                             </div>
                         </div>
                     </span>

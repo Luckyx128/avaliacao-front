@@ -10,7 +10,7 @@ interface Pergunta {
     resposta: number;
 }
 const Autoavaliacao = ({ setor }: { setor: string }) => {
-    const [cookies] = useCookies(['matricula', 'gestor','super', 'nome']);
+    const [cookies] = useCookies(['matricula', 'gestor', 'super', 'nome']);
     const [perguntas, setPerguntas] = useState<Pergunta[]>([]);
     const api = import.meta.env.VITE_HOST_API;
     const [comentario, setComentario] = useState('');
@@ -46,7 +46,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
                 text: "Você não poderá alterar suas respostas depois",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6', 
+                confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, enviar!',
                 cancelButtonText: 'Cancelar'
@@ -83,7 +83,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
             }).then(() => {
                 location.reload();
             });
-            
+
         } catch (error) {
             Swal.fire({
                 title: 'Erro!',
@@ -128,7 +128,8 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
             <div className="autoavaliacao-left-sidebar">
                 <div>
                     <span>
-                        <h1>Respondidas</h1>
+                        <h1>Autoavaliação</h1>
+
                         <div style={{
                             position: 'relative',
                             width: '150px',
@@ -152,7 +153,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
                                 />
                                 <circle
                                     cx="75"
-                                    cy="75" 
+                                    cy="75"
                                     r="70"
                                     stroke={perguntas.filter(q => q.resposta).length === perguntas.length ? '#4CAF50' : '#ddd'}
                                     strokeWidth="4"
@@ -168,7 +169,9 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
                                 transform: 'translate(-50%, -50%)',
                                 textAlign: 'center'
                             }}>
-                                <h2 id="respostas-count">{perguntas.filter(q => q.resposta).length}/{perguntas.length}</h2>
+                                <h2 id="respostas-count">
+                                    {Math.round((perguntas.filter(q => q.resposta).length / perguntas.length) * 100)}%
+                                </h2>
                             </div>
                         </div>
                     </span>

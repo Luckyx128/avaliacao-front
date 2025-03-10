@@ -1,20 +1,22 @@
 :root {
   /* Cores Principais */
-  --primary: #2C3E50;    /* Azul profundo - cor principal */
-  --secondary: #3498DB;  /* Azul claro - ações e destaques */
+  --primary: #005AF5;       /* Azul Profundo (Primário) */
+  --secondary: #00A7F5;     /* Azul Ciano Vibrante (Secundário) */
   
-  /* Cores de Suporte */
-  --success: #27AE60;    /* Verde - feedback positivo */
-  --warning: #F1C40F;    /* Amarelo - alertas */
-  --danger: #E74C3C;     /* Vermelho - erros/negativos */
+  /* Cores Funcionais */
+  --success: #00F54F;       /* Verde Neon (Sucesso) */
+  --warning: #00F5A2;       /* Verde Água (Alertas) */
+  --danger: #00F5F5;        /* Ciano Eletrico (Erros) */
   
-  /* Tons Neutros */
-  --background: #F8FAFC;  /* Fundo claro */
-  --surface: #FFFFFF;    /* Superfícies de cards */
-  --text: #2C3E50;       /* Texto principal */
-  --text-light: #95A5A6; /* Texto secundário */
-}
+  /* Neutros e Textos */
+  --background: #F8FAFC;    /* Fundo claro (mantido para contraste) */
+  --surface: #FFFFFF;       /* Superfícies brancas */
+  --text: #232D2E;          /* Cinza Escuro (Texto principal) */
+  --text-light: #5C6C7D;    /* Cinza Médio (Texto secundário) */
 
+  /* Cores Adicionais RGB */
+  --rgb-accent: #00F5A2;    /* Destaque para elementos especiais */
+}
 #root {
   width: 100vw;
   height: 100vh;
@@ -62,4 +64,93 @@
 body {
   height: 100vh;
   width: 100vw;
+}
+
+.sidebar {
+    width: 20%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+    box-sizing: border-box;
+    color: white;
+    z-index: 9;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: white;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
+
+.menu-item.active {
+    background: var(--surface);
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.menu-item:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar button {
+    border: none;
+    width: 100%;
+    transition: all 0.3s ease;
+    color: inherit;
+}
+
+.status-indicator {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin-left: auto;
+    background: var(--surface);
+    color: var(--primary);
+}
+
+.month-section {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.month-section h2 {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0;
+    text-transform: capitalize;
 }
