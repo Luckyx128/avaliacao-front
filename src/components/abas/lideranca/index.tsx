@@ -63,7 +63,8 @@ const Lideranca = () => {
                 negativos: negativos,
                 gestor: cookies.gestor,
                 super: cookies.super,
-                nome: cookies.nome
+                nome: cookies.nome,
+                tipo_id: 1
             }));
 
             await fetch(`${api}respostas`, {
@@ -180,7 +181,7 @@ const Lideranca = () => {
                     onClick={handleSubmit}
                     disabled={perguntas.some(q => !q.resposta)}
                 >
-                    Enviar Autoavaliação
+                    Enviar Avaliação
                 </button>
             </div>
         </div>

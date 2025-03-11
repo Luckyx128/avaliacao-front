@@ -5,7 +5,11 @@ import Header from "../../objects/header";
 import Sidebar from "../../objects/sidebar";
 import Autoavaliacao from "../abas/autoavaliacao";
 import Lideranca from "../abas/lideranca";
+import Reports from "../../objects/reports";
+import IndividualReport from "../../objects/reportsIndividual";
 import api from "../../services/api";
+import TeamReport from "../../objects/reportEquipe";
+import LeadershipReport from "../../objects/reportLider";
 interface StatusMes {
   data: {
     status: string;
@@ -31,17 +35,16 @@ function Dashboard() {
     super: cookies.super,
     gestor: cookies.gestor,
   });
- 
-  
+
   const [mes, setMes] = useState("");
   const [statusTipo2, setStatusTipo2] = useState<string>('');
   const [statusTipo1, setStatusTipo1] = useState<string>('');
   const [selectedAba, setSelectedAba] = useState<string>('');
+  const [selectedMatricula, setSelectedMatricula] = useState<string>('');
+
   if (!cookies.nome) {
     window.location.href = "/";
   }
-
-  
 
   useEffect(() => {
     const date = new Date();
@@ -60,28 +63,51 @@ function Dashboard() {
     fetchStatusTipo1();
   }, []);
 
-  const handleMenuSelect = (menuItem: string) => {
+  const handleMenuSelect = (menuItem: string, matricula?: string) => {
     setSelectedAba(menuItem);
+    if (menuItem === 'relatorio-individual') {
+      const targetMatricula = matricula || logado.matricula;
+      setSelectedMatricula(targetMatricula);
+    }
+  };
+
+  const renderContent = () => {
+    switch (selectedAba) {
+      case 'autoavaliacao':
+        return <Autoavaliacao setor={logado.cargo} />;
+      case 'avaliacao-lideranca':
+        return <Lideranca />;
+      case 'relatorio-geral':
+        return <Reports />;
+      case 'relatorio-individual':
+        return <IndividualReport matricula={selectedMatricula || logado.matricula} />;
+      case 'relatorio-equipe':
+        return <TeamReport login={logado.login} />;
+      case 'relatorio-lideranca':
+        return <LeadershipReport />;
+      default:
+        return (
+          <>
+            <h2>Bem-vindo! {logado.nome}</h2>
+            <h2>Selecione uma opção no menu</h2>
+          </>
+        );
+    }
   };
 
   return (
     <>
       <Header nome={logado.nome}/>
       <main className="main-container">
-        <Sidebar  onMenuSelect={handleMenuSelect} mes={mes} statusTipo2={statusTipo2} statusTipo1={statusTipo1} />
+        <Sidebar 
+          onMenuSelect={handleMenuSelect} 
+          mes={mes} 
+          statusTipo2={statusTipo2} 
+          statusTipo1={statusTipo1}
+          matricula={logado.matricula}
+        />
         <div className="content">
-          {selectedAba === 'autoavaliacao' ? (
-            <Autoavaliacao   setor={logado.cargo} />
-          ) : (
-            selectedAba === 'avaliacao-lideranca' ? (
-              <Lideranca   />
-            ) : (
-              <>
-                <h2>Bem-vindo! {logado.nome}</h2>
-                <h2>Nenhuma aba selecionada</h2>
-              </>
-            )
-          )}
+          {renderContent()}
         </div>
       </main>
     </>

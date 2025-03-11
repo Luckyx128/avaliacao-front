@@ -1,0 +1,205 @@
+.individual-report {
+    padding: 2rem;
+    background-color: var(--background);
+    width: 80%;
+    overflow-x: auto;
+  }
+  
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: var(--surface);
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .colaborador-info h1 {
+    font-size: 1.5rem;
+    color: white;
+    margin: 0;
+  }
+  
+  .matricula {
+    color: white;
+    font-size: 0.9rem;
+  }
+  
+  .media-geral {
+    text-align: center;
+  }
+  
+  .media-geral .label {
+    display: block;
+    color: white;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .media-geral .value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  
+  .media-geral .total {
+    display: block;
+    color: white;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  
+  .report-content {
+    display: grid;
+    gap: 2rem;
+  }
+  
+  .avaliacoes-section,
+  .feedback-section,
+  .historico-section {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .assuntos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .assunto-card {
+    padding: 1rem;
+    border-radius: 8px;
+    background: var(--background);
+  }
+  
+  .assunto-card h3 {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .nota {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  .nota-5 { background: var(--success); color: white; }
+  .nota-4 { background: var(--primary); color: white; }
+  .nota-3 { background: var(--warning); color: var(--text); }
+  .nota-2, .nota-1 { background: var(--danger); color: white; }
+  
+  .feedback-card {
+    margin-top: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .feedback-header {
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .feedback-content {
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  .feedback-item h4 {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .feedback-item p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  .feedback-item.positivo h4 { color: var(--success); }
+  .feedback-item.negativo h4 { color: var(--danger); }
+  
+  .historico-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .historico-card {
+    padding: 1rem;
+    border-radius: 8px;
+    background: var(--background);
+  }
+  
+  .historico-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .historico-card h3 {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin: 0;
+  }
+  
+  .data {
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+  
+  @media (max-width: 992px) {
+    .individual-report {
+      width: 70%;
+      margin-left: 30%;
+    }
+  
+    .report-header {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .individual-report {
+      width: calc(100% - 80px);
+      margin-left: 80px;
+      padding: 1rem;
+    }
+  
+    .feedback-content {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .individual-report {
+      width: 100%;
+      margin-left: 0;
+    }
+  
+    .report-header {
+      padding: 1rem;
+    }
+  
+    .media-geral .value {
+      font-size: 2rem;
+    }
+  }

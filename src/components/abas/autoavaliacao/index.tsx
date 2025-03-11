@@ -64,7 +64,8 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
                 negativos: negativos,
                 gestor: cookies.gestor,
                 super: cookies.super,
-                nome: cookies.nome
+                nome: cookies.nome,
+                tipo_id: 2
             }));
 
             await fetch(`${api}respostas`, {

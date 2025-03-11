@@ -1,0 +1,324 @@
+.team-report {
+  padding: 2rem;
+  background-color: var(--background);
+  width: 100%;
+  overflow-y: auto;
+}
+
+/* Header do Relatório */
+.report-header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 16px;
+  padding: 2rem;
+  color: white;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.equipe-info h1 {
+  font-size: 1.75rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.equipe-info .stats {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.media-geral {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.media-geral .label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.media-geral .value {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+/* Seção de Métricas */
+.metricas-section {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metricas-section h2 {
+  color: var(--text);
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.assuntos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.assunto-card {
+  background: var(--background);
+  padding: 1.25rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.assunto-card h3 {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Seção de Colaboradores */
+.colaboradores-section {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.colaboradores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.colaborador-card {
+  background: var(--background);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.colaborador-card:hover {
+  transform: translateY(-2px);
+}
+
+.colaborador-card.pendente {
+  opacity: 0.7;
+}
+
+.colaborador-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.colaborador-info h3 {
+  color: var(--text);
+  font-size: 1.1rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.colaborador-info .funcao {
+  color: var(--text-light);
+  font-size: 0.8rem;
+}
+
+.status .media {
+  background: var(--primary);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status .pendente {
+  background: var(--warning);
+  color: var(--text);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.historico-preview {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.historico-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+}
+
+.historico-item .assunto {
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+/* Notas */
+.nota {
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.nota-5 { 
+  background: var(--success);
+  color: var(--text);
+}
+
+.nota-4 { 
+  background: var(--primary);
+  color: white;
+}
+
+.nota-3 { 
+  background: var(--warning);
+  color: var(--text);
+}
+
+.nota-2, .nota-1 { 
+  background: var(--danger);
+  color: white;
+}
+
+/* Seção de Feedback */
+.feedback-section {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.feedback-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.feedback-card {
+  background: var(--background);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.feedback-header {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feedback-header .nome {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.feedback-header .data {
+  color: var(--text-light);
+  font-size: 0.8rem;
+}
+
+.feedback-content {
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.feedback-item h4 {
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.feedback-item p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.feedback-item.positivo h4 {
+  color: var(--success);
+}
+
+.feedback-item.negativo h4 {
+  color: var(--danger);
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .team-report {
+    width: 75%;
+    margin-left: 25%;
+  }
+
+  .report-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .media-geral {
+    width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .team-report {
+    width: 70%;
+    margin-left: 30%;
+  }
+
+  .colaboradores-grid,
+  .feedback-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-report {
+    width: calc(100% - 80px);
+    margin-left: 80px;
+    padding: 1rem;
+  }
+
+  .report-header {
+    padding: 1.5rem;
+  }
+
+  .media-geral .value {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-report {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .assuntos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .colaborador-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .status {
+    width: 100%;
+    text-align: center;
+  }
+}
