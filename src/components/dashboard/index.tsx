@@ -5,6 +5,7 @@ import Header from "../../objects/header";
 import Sidebar from "../../objects/sidebar";
 import Autoavaliacao from "../abas/autoavaliacao";
 import Lideranca from "../abas/lideranca";
+import api from "../../services/api";
 interface StatusMes {
   data: {
     status: string;
@@ -40,7 +41,6 @@ function Dashboard() {
     window.location.href = "/";
   }
 
-  const api = import.meta.env.VITE_HOST_API;
   
 
   useEffect(() => {

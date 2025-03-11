@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Swal from 'sweetalert2';
 import './style.css';
-
+import api from '../../../services/api';
 interface Pergunta {
     id: number;
     assunto: string;
@@ -16,7 +16,6 @@ const Lideranca = () => {
     const [comentario, setComentario] = useState('');
     const [positivos, setPositivos] = useState('');
     const [negativos, setNegativos] = useState('');
-    const api = import.meta.env.VITE_HOST_API;
     useEffect(() => {
         const fetchPerguntas = async () => {
             try {

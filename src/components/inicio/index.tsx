@@ -2,7 +2,7 @@ import { useState } from "react";
 import { InputInicio } from "../../objects/inputs";
 import { useCookies } from "react-cookie";
 import "./style.css";
-
+import api from "../../services/api";
 interface LoginResponse {
   status_code: number;
   data: {
@@ -34,9 +34,9 @@ function Inicio() {
   const [erro, setErro] = useState("");
   const [erroReset, setErroReset] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const api = import.meta.env.VITE_HOST_API;
 
   const setCookies = (data: LoginResponse["data"]) => {
+  
     const cookieOptions = { path: "/", maxAge: 3600 }; // 1 hour expiration
     setCookie("nome", data.nome, cookieOptions);
     setCookie("cargo", data.cargo, cookieOptions);
@@ -88,6 +88,7 @@ function Inicio() {
     setErro("");
 
     try {
+      console.log(api);
       const formData = new FormData(event.currentTarget);
       const formValues = Object.fromEntries(formData) as Record<string, string>;
       const data: FormData = {

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import Swal from 'sweetalert2';
 import './style.css';
+import api from '../../../services/api';
 
 interface Pergunta {
     id: number;
@@ -12,7 +13,6 @@ interface Pergunta {
 const Autoavaliacao = ({ setor }: { setor: string }) => {
     const [cookies] = useCookies(['matricula', 'gestor', 'super', 'nome']);
     const [perguntas, setPerguntas] = useState<Pergunta[]>([]);
-    const api = import.meta.env.VITE_HOST_API;
     const [comentario, setComentario] = useState('');
     const [positivos, setPositivos] = useState('');
     const [negativos, setNegativos] = useState('');
