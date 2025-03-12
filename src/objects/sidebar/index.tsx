@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './style.css';
 import { useCookies } from 'react-cookie';
-import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
+import { IoChevronDown } from 'react-icons/io5';
 
 interface SidebarProps {
   onMenuSelect: (menu: string, matricula?: string) => void;
