@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
   /* Cores Principais */
   --primary: #005AF5;       /* Azul Profundo (Primário) */
@@ -5,8 +7,8 @@
   
   /* Cores Funcionais */
   --success: #00F54F;       /* Verde Neon (Sucesso) */
-  --warning: #00F5A2;       /* Verde Água (Alertas) */
-  --danger: #00F5F5;        /* Ciano Eletrico (Erros) */
+  --warning: #e4f16a;       /* Verde Água (Alertas) */
+  --danger: #f5461a;        /* Ciano Eletrico (Erros) */
   
   /* Neutros e Textos */
   --background: #F8FAFC;    /* Fundo claro (mantido para contraste) */
@@ -16,7 +18,141 @@
 
   /* Cores Adicionais RGB */
   --rgb-accent: #00F5A2;    /* Destaque para elementos especiais */
+
+  /* Tipografia */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
+  /* Tamanhos de Fonte */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  
+  /* Pesos de Fonte */
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
 }
+
+/* Estilos Base */
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--text);
+  background-color: var(--background);
+}
+
+/* Removendo a cor padrão dos headings para permitir herança do contexto */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+  /* Removendo a cor fixa para permitir herança */
+}
+
+/* Definindo cores padrão para headings em fundos claros */
+.team-report h1, 
+.team-report h2, 
+.team-report h3, 
+.team-report h4, 
+.team-report h5, 
+.team-report h6,
+.metricas-section h1,
+.metricas-section h2,
+.metricas-section h3,
+.metricas-section h4,
+.metricas-section h5,
+.metricas-section h6,
+.colaboradores-section h1,
+.colaboradores-section h2,
+.colaboradores-section h3,
+.colaboradores-section h4,
+.colaboradores-section h5,
+.colaboradores-section h6 {
+  color: var(--text);
+}
+
+/* Definindo cores para headings em fundos escuros */
+.report-header h1,
+.report-header h2,
+.report-header h3,
+.report-header h4,
+.report-header h5,
+.report-header h6,
+.sidebar h1,
+.sidebar h2,
+.sidebar h3,
+.sidebar h4,
+.sidebar h5,
+.sidebar h6,
+.month-section h1,
+.month-section h2,
+.month-section h3,
+.month-section h4,
+.month-section h5,
+.month-section h6 {
+  color: white;
+}
+
+h1 { font-size: var(--font-size-3xl); }
+h2 { font-size: var(--font-size-2xl); }
+h3 { font-size: var(--font-size-xl); }
+h4 { font-size: var(--font-size-lg); }
+h5 { font-size: var(--font-size-base); }
+h6 { font-size: var(--font-size-sm); }
+
+p {
+  margin: 0;
+  line-height: var(--line-height-relaxed);
+}
+
+button, input, select, textarea {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+}
+
+/* Classes de Utilidade para Tipografia */
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-base { font-size: var(--font-size-base); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-2xl { font-size: var(--font-size-2xl); }
+.text-3xl { font-size: var(--font-size-3xl); }
+.text-4xl { font-size: var(--font-size-4xl); }
+
+.font-light { font-weight: var(--font-light); }
+.font-regular { font-weight: var(--font-regular); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+
+.leading-tight { line-height: var(--line-height-tight); }
+.leading-normal { line-height: var(--line-height-normal); }
+.leading-relaxed { line-height: var(--line-height-relaxed); }
+
+.tracking-tight { letter-spacing: var(--letter-spacing-tight); }
+.tracking-normal { letter-spacing: var(--letter-spacing-normal); }
+.tracking-wide { letter-spacing: var(--letter-spacing-wide); }
+
 #root {
   width: 100vw;
   height: 100vh;

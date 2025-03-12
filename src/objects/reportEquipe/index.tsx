@@ -1,17 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import api from '../../services/api';
 import './style.css';
 import ColaboradorSearch from '../colaboradorSearch';
+import html2pdf from 'html2pdf.js';
 
-interface Historico {
+
+interface tipoP{
+  [key: string]: { media: number };
+}
+interface tipo23{
   assunto: string;
   data: string;
   nota: number;
 }
 
+interface Historico {
+  tipo_1: tipoP;
+  tipo_2: tipo23[];
+  tipo_3: tipo23[];
+}
+
 interface Colaborador {
   funcao: string;
-  historico: Historico[];
+  historico: Historico;
   media: number;
   nome: string;
   setor_nome: string;
@@ -51,6 +62,7 @@ interface TeamReportProps {
 }
 
 const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
+  const reportRef = useRef<HTMLDivElement>(null);
   const [data, setData] = useState<EquipeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -76,12 +88,33 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
     }
   };
 
+  const handleGeneratePDF = () => {
+    if (reportRef.current) {
+      const element = reportRef.current;
+      const opt = {
+        margin: 1,
+        filename: `relatorio_equipe_${data?.gestor_nome || 'equipe'}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a2', orientation: 'landscape' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+  };
+
   useEffect(() => {
     fetchData(login);
   }, [login]);
 
   return (
-    <div className="team-report">
+    <div className="team-report" ref={reportRef}>
+      <div className="report-actions">
+        <button onClick={handleGeneratePDF} className="btn-pdf">
+          Gerar PDF
+        </button>
+      </div>
+      
       <ColaboradorSearch 
         onSelect={(novoLogin) => {
           setData(null);
@@ -113,9 +146,14 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
                 {data.total_colaboradores} colaboradores | {Object.values(data.por_colaborador).filter(c => c.total_avaliacoes > 0).length} avaliados
               </span>
             </div>
-            <div className="media-geral">
-              <span className="label">Média da Equipe</span>
-              <span className="value">{data.media_geral_equipe.toFixed(1)}</span>
+            <div className="header-actions">
+              <div className="media-geral">
+                <span className="label">Média da Equipe</span>
+                <span className="value">{data.media_geral_equipe.toFixed(1)}</span>
+              </div>
+              <button onClick={handleGeneratePDF} className="btn-pdf">
+                Exportar PDF
+              </button>
             </div>
           </div>
 
@@ -142,7 +180,7 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
                     <div className="colaborador-header">
                       <div className="colaborador-info">
                         <h3>{colaborador.nome}</h3>
-                        <span className="funcao">{colaborador.funcao}</span>
+                        <span className="setor">{colaborador.setor_nome}</span>
                       </div>
                       <div className="status">
                         {colaborador.total_avaliacoes > 0 ? (
@@ -152,16 +190,37 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
                         )}
                       </div>
                     </div>
-                    {colaborador.historico.length > 0 && (
-                      <div className="historico-preview">
-                        {colaborador.historico.slice(0, 3).map((h, i) => (
-                          <div key={i} className="historico-item">
-                            <span className="assunto">{h.assunto}</span>
-                            <span className={`nota nota-${Math.floor(h.nota)}`}>
-                              {h.nota.toFixed(1)}
-                            </span>
+                    {colaborador.total_avaliacoes > 0 && (
+                      <div className="avaliacoes-container">
+                        <div className="avaliacao-section">
+                          <div className="historico-header">
+                            <span>Assunto</span>
+                            <span>Operador</span>
+                            <span>Auto</span>
+                            <span>Coordenador</span>
                           </div>
-                        ))}
+                          <div className="historico-preview">
+                            {Object.keys({...colaborador.historico.tipo_1, 
+                              ...Object.fromEntries(colaborador.historico.tipo_2.map(h => [h.assunto, h])),
+                              ...Object.fromEntries(colaborador.historico.tipo_3.map(h => [h.assunto, h]))
+                            }).map(assunto => (
+                              <div key={assunto} className="historico-item">
+                                <span className="assunto">{assunto}</span>
+                                <div className="notas-container">
+                                  <span className={`nota nota-${Math.floor(colaborador.historico.tipo_1[assunto]?.media || 0)}`}>
+                                    {colaborador.historico.tipo_1[assunto]?.media?.toFixed(1) || '-'}
+                                  </span>
+                                  <span className={`nota nota-${Math.floor(colaborador.historico.tipo_2.find(h => h.assunto === assunto)?.nota || 0)}`}>
+                                    {colaborador.historico.tipo_2.find(h => h.assunto === assunto)?.nota?.toFixed(1) || '-'}
+                                  </span>
+                                  <span className={`nota nota-${Math.floor(colaborador.historico.tipo_3.find(h => h.assunto === assunto)?.nota || 0)}`}>
+                                    {colaborador.historico.tipo_3.find(h => h.assunto === assunto)?.nota?.toFixed(1) || '-'}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>

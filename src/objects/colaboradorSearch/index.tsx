@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import './style.css';
-
+import { useCookies } from 'react-cookie';
 interface Colaborador {
   matricula: number;
   nome: string;
@@ -14,7 +14,7 @@ interface Colaborador {
 interface ColaboradorSearchProps {
   onSelect: (identificador: string) => void;
   currentMatricula: string;
-  searchType?: 'colaborador' | 'lideranca';
+  searchType?: 'colaborador' | 'lideranca' | 'supervisor';
   apiEndpoint?: string;
   placeholder?: string;
 }
@@ -26,6 +26,7 @@ const ColaboradorSearch: React.FC<ColaboradorSearchProps> = ({
   apiEndpoint = 'colaboradores/busca',
   placeholder = "Buscar colaborador por nome ou matrícula..."
 }) => {
+  const [cookies] = useCookies(['login']);
   const [searchTerm, setSearchTerm] = useState('');
   const [colaboradores, setColaboradores] = useState<Colaborador[]>([]);
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ const ColaboradorSearch: React.FC<ColaboradorSearchProps> = ({
 
       setLoading(true);
       try {
-        const response = await fetch(`${api}${apiEndpoint}?termo=${searchTerm}`);
+        const response = await fetch(`${api}${apiEndpoint}?termo=${searchTerm}&login=${cookies.login}`);
         const data = await response.json();
         setColaboradores(data.data || []);
       } catch (error) {

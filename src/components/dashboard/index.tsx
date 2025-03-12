@@ -10,6 +10,7 @@ import IndividualReport from "../../objects/reportsIndividual";
 import api from "../../services/api";
 import TeamReport from "../../objects/reportEquipe";
 import LeadershipReport from "../../objects/reportLider";
+import Lideres from "../abas/lideres";
 interface StatusMes {
   data: {
     status: string;
@@ -39,6 +40,7 @@ function Dashboard() {
   const [mes, setMes] = useState("");
   const [statusTipo2, setStatusTipo2] = useState<string>('');
   const [statusTipo1, setStatusTipo1] = useState<string>('');
+  const [statusTipo3, setStatusTipo3] = useState<string>('');
   const [selectedAba, setSelectedAba] = useState<string>('');
   const [selectedMatricula, setSelectedMatricula] = useState<string>('');
 
@@ -59,8 +61,14 @@ function Dashboard() {
       const data: StatusMes = await response.json();
       setStatusTipo1(data.data.status);
     };
+    const fetchStatusTipo3 = async () => {
+      const response = await fetch(`${api}status_mes?matricula=${logado.matricula}&tipo=3&setor=${logado.cargo}`);
+      const data: StatusMes = await response.json();
+      setStatusTipo3(data.data.status);
+    };
     fetchStatusTipo2();
     fetchStatusTipo1();
+    fetchStatusTipo3();
   }, []);
 
   const handleMenuSelect = (menuItem: string, matricula?: string) => {
@@ -85,6 +93,8 @@ function Dashboard() {
         return <TeamReport login={logado.login} />;
       case 'relatorio-lideranca':
         return <LeadershipReport />;
+      case 'avaliacao-lideres':
+        return <Lideres />;
       default:
         return (
           <>
@@ -104,6 +114,7 @@ function Dashboard() {
           mes={mes} 
           statusTipo2={statusTipo2} 
           statusTipo1={statusTipo1}
+          statusTipo3={statusTipo3}
           matricula={logado.matricula}
         />
         <div className="content">

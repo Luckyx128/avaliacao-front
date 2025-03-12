@@ -1,0 +1,102 @@
+.supervisor-selection {
+    margin-bottom: 2rem;
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 90%;
+}
+
+.selected-supervisor {
+    background: var(--primary);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.selected-supervisor h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.selected-supervisor .matricula {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: var(--surface);
+    border-radius: 12px;
+    color: var(--text-light);
+}
+
+.empty-state h2 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.supervisor-select {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--surface);
+    color: var(--text);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.supervisor-select:hover {
+    border-color: var(--primary);
+}
+
+.supervisor-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+}
+
+.supervisor-select option {
+    background-color: var(--primary);
+    color: var(--text);
+    padding: 0.8rem;
+    font-size: 1rem;
+}
+
+.supervisor-select option:disabled {
+    background-color: var(--background);
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.supervisor-select option.avaliado {
+    color: var(--text-light);
+    background-color: var(--background);
+}
+
+.supervisor-select option.pendente {
+    color: var(--primary);
+    background-color: var(--surface);
+}
+
+/* Estilização para diferentes navegadores */
+.supervisor-select option:checked {
+    background: linear-gradient(var(--primary), var(--primary));
+    color: white;
+}
+
+.supervisor-select option:hover:not(:disabled) {
+    background-color: var(--primary);
+    color: white;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-light);
+}
