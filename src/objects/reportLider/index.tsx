@@ -33,13 +33,14 @@ interface LeadershipData {
 const LeadershipReport: React.FC = () => {
   const [data, setData] = useState<LeadershipData | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const [filterdata, setFilterdata] = useState<LeadershipData | null>(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${api}relatorios/lideranca`);
         const result = await response.json();
         setData(result.data);
+        setFilterdata(result.data);
       } catch (error) {
         console.error('Erro ao carregar dados:', error);
       } finally {
@@ -49,6 +50,20 @@ const LeadershipReport: React.FC = () => {
 
     fetchData();
   }, []);
+
+  const handleFilter = (filter: string) => {
+    if (!data) return;
+    const filteredData: LeadershipData = {
+      lideres: { [filter]: data.lideres[filter] },
+      media_geral: data.media_geral,
+      total_avaliacoes: data.total_avaliacoes
+    };
+    if (filter === "") {
+      setFilterdata(data);
+    } else {
+      setFilterdata(filteredData);
+    }
+  };  
 
   if (loading) return <div className="loading">Carregando...</div>;
   if (!data) return <div className="error">Erro ao carregar dados</div>;
@@ -70,9 +85,17 @@ const LeadershipReport: React.FC = () => {
           </div>
         </div>
       </div>
+      <div className="filter-section">
+        <select onChange={(e) => handleFilter(e.target.value)}>
+          <option value="">Todos</option>
+          {Object.entries(data.lideres).sort((a, b) => a[1].nome.localeCompare(b[1].nome)).map(([id, lider]) => (
+            <option key={id} value={id}>{lider.nome}</option>
+          ))}
+        </select>
+      </div>
 
       <div className="leaders-grid">
-        {Object.entries(data.lideres).map(([id, lider]) => (
+        {Object.entries(filterdata?.lideres || {}).map(([id, lider]) => (
           <div key={id} className="leader-card">
             <div className="leader-header">
               <div className="leader-info">
