@@ -1,23 +1,32 @@
-# Usando uma imagem do Node.js para construir e rodar a aplicação React
-FROM node:22
+# Estágio de build
+FROM node:20-alpine as build
 
-# Definir diretório de trabalho
-WORKDIR /usr/src/app
+# Define o diretório de trabalho
+WORKDIR /app
 
-# Copiar arquivos de dependências e instalá-las
-COPY package*.json ./
+# Copia os arquivos de dependência
+COPY app/package.json app/package-lock.json ./
+
+# Instala as dependências
 RUN npm install
 
-# Copiar o código da aplicação
-COPY . .
+# Copia o restante dos arquivos da aplicação
+COPY app/ .
 
-# Construir a aplicação
+# Constrói a aplicação React
 RUN npm run build
 
+# Usando uma imagem Nginx para servir a aplicação
+FROM nginx:alpine
 
+# Copia os arquivos construídos para o diretório de serviço do Nginx
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expor a porta usada pela aplicação React
-EXPOSE 8080
+# Copia a configuração personalizada do Nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Rodar a aplicação
-CMD ["npm","run", "preview"]
+# Expõe a porta 80
+EXPOSE 80
+
+# Inicia o Nginx
+CMD ["nginx", "-g", "daemon off;"]
