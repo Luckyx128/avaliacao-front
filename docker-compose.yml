@@ -2,6 +2,6 @@ services:
   web:
     build: .
     ports:
-      - "8007:3000"
+      - "8007:8080"
     container_name: Avaliacao
     restart: unless-stopped

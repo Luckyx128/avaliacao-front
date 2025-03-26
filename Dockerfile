@@ -26,7 +26,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expõe a porta 8007
-EXPOSE 3000
+EXPOSE 8080
 
 # Inicia o Nginx
 CMD ["nginx", "-g", "daemon off;"]
