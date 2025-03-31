@@ -45,7 +45,7 @@ function Dashboard() {
   const [selectedMatricula, setSelectedMatricula] = useState<string>('');
 
   if (!cookies.nome) {
-    window.location.href = "/";
+    window.location.href = "/playground4/";
   }
 
   useEffect(() => {
