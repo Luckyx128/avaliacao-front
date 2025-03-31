@@ -5,7 +5,7 @@ import Inicio from "./components/inicio";
 import { CookiesProvider } from "react-cookie";
 function App() {
   return (
-    <BrowserRouter  basename="/playground2">
+    <BrowserRouter  basename="/playground4">
       <CookiesProvider>
 
         <Routes>
