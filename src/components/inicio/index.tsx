@@ -88,7 +88,6 @@ function Inicio() {
     setErro("");
 
     try {
-      console.log(api);
       const formData = new FormData(event.currentTarget);
       const formValues = Object.fromEntries(formData) as Record<string, string>;
       const data: FormData = {
@@ -108,7 +107,7 @@ function Inicio() {
       
       if (result.status_code === 200) {
         setCookies(result.data);
-        window.location.href = "/dashboard";
+        window.location.href = "/playground4/dashboard";
       } else {
         setErro("Matrícula ou senha incorreta");
       }
