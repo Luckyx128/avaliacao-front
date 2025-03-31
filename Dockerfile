@@ -13,6 +13,9 @@ RUN npm install
 # Copia o restante dos arquivos da aplicação
 COPY app/ .
 
+# Constrói a aplicação React
+RUN npm run build
+
 # Usando uma imagem Nginx para servir a aplicação
 FROM nginx:alpine
 
