@@ -89,6 +89,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
         location.reload();
       });
     } catch (error) {
+      console.error(error)
       Swal.fire({
         title: "Erro!",
         text: "Erro ao enviar autoavaliação",
@@ -104,6 +105,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
     <div className="autoavaliacao-container">
       <div className="autoavaliacao-content">
         <h1 className="autoavaliacao-title">Autoavaliação</h1>
+        <small className="autoavaliacao-subtitle">Você está se autoavaliando! Tome o tempo que precisar.</small>
         {perguntas.map((pergunta) => (
           <div key={pergunta.id} className="question-container">
             <h3>{pergunta.assunto}</h3>

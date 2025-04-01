@@ -165,8 +165,16 @@ h4 {
 
 .autoavaliacao-title {
     color: var(--primary);
-    margin-bottom: 32px;
+    margin-bottom: 5px;
     font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+}
+.autoavaliacao-subtitle {
+    color: var(--primary);
+    margin-bottom: 32px;
+    font-size: 1rem;
     font-weight: 600;
     text-align: center;
     width: 100%;

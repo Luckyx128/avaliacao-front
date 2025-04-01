@@ -167,6 +167,7 @@ const Lideres = () => {
             });
 
         } catch (error) {
+            console.error(error)
             Swal.fire({
                 title: 'Erro!',
                 text: 'Erro ao enviar avaliação',
