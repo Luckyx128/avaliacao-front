@@ -1,0 +1,26 @@
+.card-section{
+   padding: 25px;
+   width: 90%;
+   height: auto;
+   background-color: var(--surface);
+   border-radius: 25px;
+   box-shadow:  0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+form{
+   display: flex;
+   flex-direction: column;
+   width: '100%';
+}
+
+.select-options{
+   font-family: var(--font-family);
+   border: none;
+   background-color: var(--background);
+   padding: 15px;
+   text-align: center;
+   color: var(--primary);
+   border-radius: 15px;
+   margin: 5px;
+}
+

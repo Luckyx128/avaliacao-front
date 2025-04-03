@@ -49,7 +49,7 @@ const Lideres = () => {
         };
 
         fetchSupervisores();
-    }, [cookies.gestor]);
+    }, [cookies.gestor,cookies.login]);
 
     const fetchPerguntas = async () => {
         try {

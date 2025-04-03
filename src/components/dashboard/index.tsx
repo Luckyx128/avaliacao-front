@@ -11,6 +11,7 @@ import api from "../../services/api";
 import TeamReport from "../../objects/reportEquipe";
 import LeadershipReport from "../../objects/reportLider";
 import Lideres from "../abas/lideres";
+import Gerenciamento from "../Gerenciamento";
 interface StatusMes {
   data: {
     status: string;
@@ -69,7 +70,7 @@ function Dashboard() {
     fetchStatusTipo2();
     fetchStatusTipo1();
     fetchStatusTipo3();
-  }, []);
+  }, [logado.cargo,logado.matricula]);
 
   const handleMenuSelect = (menuItem: string, matricula?: string) => {
     setSelectedAba(menuItem);
@@ -95,6 +96,8 @@ function Dashboard() {
         return <LeadershipReport />;
       case 'avaliacao-lideres':
         return <Lideres />;
+      case 'gerenciamento':
+        return <Gerenciamento/>
       default:
         return (
           <>

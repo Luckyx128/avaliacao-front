@@ -17,7 +17,7 @@ const Sidebar = ({ onMenuSelect, mes, statusTipo2, statusTipo1, statusTipo3, mat
   const [cookie] = useCookies(['cargo']);
   const [avaliacoesOpen, setAvaliacoesOpen] = useState(true);
   const [relatoriosOpen, setRelatoriosOpen] = useState(true);
-  
+  const [administracaoOpen,setAdministracaoOpen] = useState(true);
   const handleMenuClick = (menu: string, matricula?: string) => {
     setSelectedMenu(menu);
     onMenuSelect(menu, matricula);
@@ -131,6 +131,31 @@ const Sidebar = ({ onMenuSelect, mes, statusTipo2, statusTipo1, statusTipo3, mat
               )}
             </div>
           </div>
+        </div>
+        <div className="menu-section">
+          <button 
+            className={`section-header ${administracaoOpen ? 'open' : ''}`}
+            onClick={() => setAdministracaoOpen(!administracaoOpen)}
+          >
+            <h1>Administração</h1>
+            <IoChevronDown />
+          </button>
+          {cookie.cargo === 1 ? (
+          <div className={`section-content ${administracaoOpen ? 'open' : ''}`}>
+            <div className="menu-items-container">
+              <button
+                className={`menu-item ${selectedMenu === 'gerenciamento' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('gerenciamento')}
+              >
+                
+                  <span>Gerencimento</span>
+                
+              </button>
+            </div>
+          </div>
+          ) : (
+            null
+           )}
         </div>
       </nav>
     </div>

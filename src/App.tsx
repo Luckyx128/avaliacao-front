@@ -3,6 +3,7 @@ import "./App.css";
 import Dashboard from "./components/dashboard";
 import Inicio from "./components/inicio";
 import { CookiesProvider } from "react-cookie";
+import Gerenciamento from './components/Gerenciamento'
 function App() {
   return (
     <BrowserRouter  basename="/playground4">
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/gerenciamento" element={<Gerenciamento/>}/>
         </Routes>
       </CookiesProvider>
     </BrowserRouter>

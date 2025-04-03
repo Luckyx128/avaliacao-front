@@ -39,7 +39,7 @@ const Lideranca = () => {
     };
 
     fetchPerguntas();
-  }, []);
+  }, [cookies.cargo]);
 
   const handleRatingChange = (questionId: number, rating: number) => {
     setPerguntas(

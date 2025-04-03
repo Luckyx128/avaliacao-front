@@ -76,6 +76,7 @@ function Inicio() {
         setErroReset("Erro ao resetar senha. Verifique suas credenciais.");
       }
     } catch (error) {
+      console.error(error)
       setErroReset("Erro ao conectar com o servidor");
     } finally {
       setIsLoading(false);
@@ -112,6 +113,7 @@ function Inicio() {
         setErro("Matrícula ou senha incorreta");
       }
     } catch (error) {
+      console.error(error)
       setErro("Erro ao conectar com o servidor");
     } finally {
       setIsLoading(false);

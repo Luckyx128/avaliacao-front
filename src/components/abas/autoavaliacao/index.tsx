@@ -10,6 +10,12 @@ interface Pergunta {
   assunto: string;
   resposta: number;
 }
+
+type responseData = {
+  message:string
+  status_code:number
+  error:string
+}
 const Autoavaliacao = ({ setor }: { setor: string }) => {
   const [cookies] = useCookies(["matricula", "gestor", "super", "nome"]);
   const [perguntas, setPerguntas] = useState<Pergunta[]>([]);
@@ -31,7 +37,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
     };
 
     fetchPerguntas();
-  }, []);
+  }, [setor]);
 
   const handleRatingChange = (questionId: number, rating: number) => {
     console.log(questionId, rating);
@@ -71,23 +77,34 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
         nome: cookies.nome,
         tipo_id: 2,
       }));
-
-      await fetch(`${api}respostas`, {
+      const response = await fetch(`${api}respostas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ respostas }),
       });
+      const data:responseData = await response.json()
+      if(data.status_code === 200){
 
-      Swal.fire({
-        title: "Sucesso!",
-        text: "Autoavaliação enviada com sucesso!",
-        icon: "success",
-        confirmButtonColor: "#3085d6",
-      }).then(() => {
-        location.reload();
-      });
+        Swal.fire({
+          title: "Sucesso!",
+          text: "Autoavaliação enviada com sucesso!",
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+        }).then(() => {
+          location.reload();
+        });
+      }else{
+        Swal.fire({
+          title: "Erro!",
+          text: "Falha no cadastro da sua autoavaliação!",
+          icon: "error",
+          confirmButtonColor: "#3085d6",
+        }).then(() => {
+          location.reload();
+        });
+      }
     } catch (error) {
       console.error(error)
       Swal.fire({
