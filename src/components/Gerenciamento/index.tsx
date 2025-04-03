@@ -4,7 +4,7 @@ import NovaAvaliacao from "../../objects/novaAvaliacao";
 import "./style.css";
 import NovosParametros from "../../objects/novoParametro";
 import api from "../../services/api";
-
+import ManipularUsuario from "../../objects/manipularUsuario";
 type responseData = {
   message: string;
   status_code: number;
@@ -65,6 +65,8 @@ const Gerenciamento = () => {
           setTipos={setTipos}
           setSetores={setSetores}
         />
+        <ManipularUsuario 
+          setores={setores}/>
       </section>
     </section>
   );

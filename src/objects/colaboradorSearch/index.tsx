@@ -13,14 +13,16 @@ interface Colaborador {
 
 interface ColaboradorSearchProps {
   onSelect: (identificador: string) => void;
+  onSelectNome:(identificador: string) => void;
   currentMatricula: string;
-  searchType?: 'colaborador' | 'lideranca' | 'supervisor';
+  searchType?: 'colaborador' | 'lideranca' | 'supervisor' | 'gerenciamento';
   apiEndpoint?: string;
   placeholder?: string;
 }
 
 const ColaboradorSearch: React.FC<ColaboradorSearchProps> = ({ 
   onSelect, 
+  onSelectNome,
   currentMatricula, 
   searchType = 'colaborador',
   apiEndpoint = 'colaboradores/busca',
@@ -79,7 +81,8 @@ const ColaboradorSearch: React.FC<ColaboradorSearchProps> = ({
                 key={colaborador.matricula}
                 className={`colaborador-item ${colaborador.matricula.toString() === currentMatricula ? 'active' : ''}`}
                 onClick={() => {
-                  onSelect(searchType === 'colaborador' ? colaborador.matricula.toString() : colaborador.login);
+                  onSelect(searchType === 'colaborador' || searchType === 'gerenciamento' ? colaborador.matricula.toString() : colaborador.login);
+                  searchType === 'gerenciamento'? onSelectNome(colaborador.nome) : null
                   setShowResults(false);
                   setSearchTerm('');
                 }}

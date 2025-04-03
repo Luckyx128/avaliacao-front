@@ -1,6 +1,6 @@
 #section-gerenciamento{
    display: flex;
-   justify-content: center;
+   justify-content: start;
    width: 90%;
    flex-direction: column;
    background-color: var(--background);
@@ -55,8 +55,8 @@
 #section-gerenciamento #split-section {
    display: flex;
    justify-content: space-between;
-   width: 90%;
    padding: 25px 0;
+   gap:70px;
 }
 
 .split-card-section {
