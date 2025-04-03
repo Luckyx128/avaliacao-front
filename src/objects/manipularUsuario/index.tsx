@@ -1,4 +1,4 @@
-import { use, useState } from 'react'
+import {  useState } from 'react'
 import ColaboradorSearch from '../colaboradorSearch'
 import { useCookies } from 'react-cookie'
 import './style.css'
