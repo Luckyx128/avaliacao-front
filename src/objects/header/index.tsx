@@ -25,7 +25,7 @@ const Header = ({ nome }: HeaderProps) => {
         cookies.matricula = null;
         cookies.nome = null;
         cookies.cargo = null;
-        window.location.href = "/";
+        window.location.href = "/playground4/";
       }}/>
       </div>
     </header>
