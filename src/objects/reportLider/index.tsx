@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 import './style.css';
-
+import { useCookies } from 'react-cookie';
 interface Comentario {
   comentario: string;
   data: string;
@@ -34,10 +34,11 @@ const LeadershipReport: React.FC = () => {
   const [data, setData] = useState<LeadershipData | null>(null);
   const [loading, setLoading] = useState(true);
   const [filterdata, setFilterdata] = useState<LeadershipData | null>(null);
+  const [cookies] = useCookies(['login']);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${api}relatorios/lideranca`);
+        const response = await fetch(`${api}relatorios/lideranca?login=${cookies.login}`);
         const result = await response.json();
         setData(result.data);
         setFilterdata(result.data);

@@ -73,7 +73,7 @@ const Sidebar = ({ onMenuSelect, mes, statusTipo2, statusTipo1, statusTipo3, mat
                   className={`menu-item ${selectedMenu === 'avaliacao-lideres' ? 'active' : ''}`}
                   onClick={() => handleMenuClick('avaliacao-lideres')}
                 >
-                  <span>Avaliação de Lideres</span>
+                  <span>Avaliação de Subordinados</span>
                   <span className="status-indicator">
                     {statusTipo3 === 'Avaliação já respondida' ? 'Respondida' : 'Pendente'}
                   </span>

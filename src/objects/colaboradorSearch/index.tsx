@@ -43,7 +43,7 @@ const ColaboradorSearch: React.FC<ColaboradorSearchProps> = ({
 
       setLoading(true);
       try {
-        const response = await fetch(`${api}${apiEndpoint}?termo=${searchTerm}&login=${cookies.login}`);
+        const response = await fetch(`${api}${apiEndpoint}?termo=${searchTerm}&login=${cookies.login}&searchType=${searchType}`);
         const data = await response.json();
         setColaboradores(data.data || []);
       } catch (error) {

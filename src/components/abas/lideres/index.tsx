@@ -24,7 +24,11 @@ interface SupervisorOption {
     nome: string;
     avaliado: boolean;
 }
-
+type responseData = {
+    message:string
+    status_code:number
+    error:string
+  }
 const Lideres = () => {
     const [cookies] = useCookies(['matricula', 'gestor', 'super', 'nome', 'cargo', 'login']);
     const [perguntas, setPerguntas] = useState<Pergunta[]>([]);
@@ -147,24 +151,36 @@ const Lideres = () => {
                 tipo_id: 3
             }));
 
-            await fetch(`${api}respostas`, {
+            const response = await fetch(`${api}respostas`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ respostas })
             });
 
-            Swal.fire({
-                title: 'Sucesso!',
-                text: 'Avaliação enviada com sucesso!',
-                icon: 'success',
-                confirmButtonColor: '#3085d6'
-            }).then(() => {
-                setSelectedSupervisor(null);
-                setPerguntas(perguntas.map(p => ({ ...p, resposta: undefined })));
-                setComentario('');
-                setPositivos('');
-                setNegativos('');
-            });
+            const data:responseData = await response.json();
+
+            if (data.status_code !== 200) {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Erro ao enviar avaliação',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6'
+                });
+            }else{
+                Swal.fire({
+                    title: 'Sucesso!',
+                    text: 'Avaliação enviada com sucesso!',
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6'
+                }).then(() => {
+                    setSelectedSupervisor(null);
+                    setPerguntas(perguntas.map(p => ({ ...p, resposta: undefined })));
+                    setComentario('');
+                    setPositivos('');
+                    setNegativos('');
+                });
+            }
+            
 
         } catch (error) {
             console.error(error)
@@ -180,7 +196,7 @@ const Lideres = () => {
     return (
         <div className="autoavaliacao-container">
             <div className="autoavaliacao-content">
-                <h1 className="autoavaliacao-title">Avaliação de Supervisor</h1>
+                <h1 className="autoavaliacao-title">Avaliação de Subordinados</h1>
                 
                 <div className="supervisor-selection">
                     <select 
@@ -188,7 +204,7 @@ const Lideres = () => {
                         onChange={(e) => handleSupervisorSelect(e.target.value)}
                         value={selectedSupervisor?.login || ''}
                     >
-                        <option className="text-xs" value="">Selecione um supervisor</option>
+                        <option className="text-xs" value="">Selecione um funcionario</option>
                         {supervisorOptions.map((supervisor) => (
                             <option 
                                 key={supervisor.login} 
@@ -240,7 +256,7 @@ const Lideres = () => {
                     </>
                 ) : (
                     <div className="empty-state">
-                        <h2>Selecione um supervisor pendente para iniciar a avaliação</h2>
+                        <h2>Selecione um funcionario pendente para iniciar a avaliação</h2>
                     </div>
                 )}
 
