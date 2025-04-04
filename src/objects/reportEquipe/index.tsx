@@ -116,6 +116,10 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
       </div>
       
       <ColaboradorSearch 
+        onSelectNome={(novoLogin) => {
+          setData(null);
+          fetchData(novoLogin);
+        }}
         onSelect={(novoLogin) => {
           setData(null);
           fetchData(novoLogin);

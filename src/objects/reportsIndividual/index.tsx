@@ -73,6 +73,11 @@ const IndividualReport: React.FC<IndividualReportProps> = ({ matricula }) => {
     <div className="individual-report">
       {cookies.cargo !== 2 && cookies.cargo !== 3 && cookies.cargo !== 5 && cookies.cargo !== 8 && (
         <ColaboradorSearch 
+        onSelectNome={(novaMatricula) => {
+          setData(null);
+          setLoading(true);
+          fetchData(novaMatricula);
+        }}
           onSelect={(novaMatricula) => {
           setData(null);
           setLoading(true);

@@ -82,7 +82,9 @@ const ColaboradorSearch: React.FC<ColaboradorSearchProps> = ({
                 className={`colaborador-item ${colaborador.matricula.toString() === currentMatricula ? 'active' : ''}`}
                 onClick={() => {
                   onSelect(searchType === 'colaborador' || searchType === 'gerenciamento' ? colaborador.matricula.toString() : colaborador.login);
-                  searchType === 'gerenciamento'? onSelectNome(colaborador.nome) : null
+                  if (searchType === 'gerenciamento') {
+                    onSelectNome(colaborador.nome);
+                  }
                   setShowResults(false);
                   setSearchTerm('');
                 }}
