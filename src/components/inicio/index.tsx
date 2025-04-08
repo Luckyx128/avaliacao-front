@@ -12,6 +12,7 @@ interface LoginResponse {
     matricula: string;
     super: boolean;
     gestor: boolean;
+    setor_nome: string;
   };
 }
 
@@ -29,6 +30,7 @@ function Inicio() {
     "matricula",
     "super",
     "gestor",
+    "setor_nome"
   ]);
   const [logar, setLogar] = useState(true);
   const [erro, setErro] = useState("");
@@ -36,7 +38,7 @@ function Inicio() {
   const [isLoading, setIsLoading] = useState(false);
 
   const setCookies = (data: LoginResponse["data"]) => {
-  
+
     const cookieOptions = { path: "/", maxAge: 3600 }; // 1 hour expiration
     setCookie("nome", data.nome, cookieOptions);
     setCookie("cargo", data.cargo, cookieOptions);
@@ -44,6 +46,7 @@ function Inicio() {
     setCookie("matricula", data.matricula, cookieOptions);
     setCookie("super", data.super, cookieOptions);
     setCookie("gestor", data.gestor, cookieOptions);
+    setCookie("setor_nome", data.setor_nome, cookieOptions);
   };
 
   const handleReset = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -59,7 +62,7 @@ function Inicio() {
         password: formValues.password,
         cpf: formValues.cpf,
       };
-      
+
       const response = await fetch(`${api}reset`, {
         method: "POST",
         headers: {
@@ -69,7 +72,7 @@ function Inicio() {
       });
 
       const result = await response.json();
-      
+
       if (result.status_code === 200) {
         setLogar(true);
       } else {
@@ -95,7 +98,7 @@ function Inicio() {
         username: formValues.username,
         password: formValues.password,
       };
-      
+
       const response = await fetch(`${api}login`, {
         method: "POST",
         headers: {
@@ -105,7 +108,7 @@ function Inicio() {
       });
 
       const result = await response.json() as LoginResponse;
-      
+
       if (result.status_code === 200) {
         setCookies(result.data);
         window.location.href = "/playground4/dashboard";

@@ -6,8 +6,6 @@ interface HeaderProps {
   nome: string;
 }
 
-
-
 const Header = ({ nome }: HeaderProps) => {
   const [cookies] = useCookies([
     "nome",
@@ -15,18 +13,25 @@ const Header = ({ nome }: HeaderProps) => {
     "login",
     "matricula",
     "super",
+    "setor_nome",
   ]);
   return (
     <header>
       <img className="logo" src={logo} alt="Logo" />
       <div className="header-info">
         <h2>{nome}</h2>
-        <IoLogInOutline id="sair" size={40} onClick={() => {
-        cookies.matricula = null;
-        cookies.nome = null;
-        cookies.cargo = null;
-        window.location.href = "/playground4/";
-      }}/>
+        <span> - </span>
+        <h3>{cookies.setor_nome}</h3>
+        <IoLogInOutline
+          id="sair"
+          size={70}
+          onClick={() => {
+            cookies.matricula = null;
+            cookies.nome = null;
+            cookies.cargo = null;
+            window.location.href = "/playground4/";
+          }}
+        />
       </div>
     </header>
   );
