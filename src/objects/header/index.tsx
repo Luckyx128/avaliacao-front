@@ -3,7 +3,7 @@ import "./style.css";
 import { useCookies } from "react-cookie";
 import { IoLogInOutline } from "react-icons/io5";
 interface HeaderProps {
-  nome: string;
+	nome: string;
 }
 
 const Header = ({ nome }: HeaderProps) => {

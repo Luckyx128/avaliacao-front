@@ -9,14 +9,14 @@ function App() {
     <BrowserRouter  basename="/playground4">
       <CookiesProvider>
 
-        <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/gerenciamento" element={<Gerenciamento/>}/>
-        </Routes>
-      </CookiesProvider>
-    </BrowserRouter>
-  );
+				<Routes>
+					<Route path="/" element={<Inicio />} />
+					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="/gerenciamento" element={<Gerenciamento />} />
+				</Routes>
+			</CookiesProvider>
+		</BrowserRouter>
+	);
 }
 
 export default App;

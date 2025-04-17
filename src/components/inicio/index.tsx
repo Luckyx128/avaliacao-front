@@ -4,22 +4,22 @@ import { useCookies } from "react-cookie";
 import "./style.css";
 import api from "../../services/api";
 interface LoginResponse {
-  status_code: number;
-  data: {
-    nome: string;
-    cargo: string;
-    login: string;
-    matricula: string;
-    super: boolean;
-    gestor: boolean;
-    setor_nome: string;
-  };
+	status_code: number;
+	data: {
+		nome: string;
+		cargo: string;
+		login: string;
+		matricula: string;
+		super: boolean;
+		gestor: boolean;
+		setor_nome: string;
+	};
 }
 
 interface FormData {
-  username: string;
-  password: string;
-  cpf?: string;
+	username: string;
+	password: string;
+	cpf?: string;
 }
 
 function Inicio() {

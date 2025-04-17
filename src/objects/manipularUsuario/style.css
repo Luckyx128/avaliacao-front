@@ -1,23 +1,22 @@
-.section-div{
-    display: flex;
-    justify-content: center;
+.section-div {
+	display: flex;
+	justify-content: center;
 }
 
-.select-options-user{
-    font-family: var(--font-family);
-    border: none;
-    background-color: var(--background);
-    padding: 15px;
-    text-align: center;
-    color: var(--primary);
-    border-radius: 15px;
-    margin: 5px;
-    width: 100%;
- }
- 
+.select-options-user {
+	font-family: var(--font-family);
+	border: none;
+	background-color: var(--background);
+	padding: 15px;
+	color: var(--primary);
+	border-radius: 15px;
+	margin: 5px;
+	width: 100%;
+}
 
- @media (max-width:2000px) {
-    .select-options-user{
-       max-width: 200px;
-    }
- }
+
+@media (max-width:2000px) {
+	.select-options-user {
+		max-width: 200px;
+	}
+}

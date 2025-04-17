@@ -12,9 +12,9 @@ interface Pergunta {
 }
 
 type responseData = {
-  message:string
-  status_code:number
-  error:string
+  message: string
+  status_code: number
+  error: string
 }
 const Autoavaliacao = ({ setor }: { setor: string }) => {
   const [cookies] = useCookies(["matricula", "gestor", "super", "nome"]);
@@ -84,8 +84,8 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
         },
         body: JSON.stringify({ respostas }),
       });
-      const data:responseData = await response.json()
-      if(data.status_code === 200){
+      const data: responseData = await response.json()
+      if (data.status_code === 200) {
 
         Swal.fire({
           title: "Sucesso!",
@@ -95,7 +95,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
         }).then(() => {
           location.reload();
         });
-      }else{
+      } else {
         Swal.fire({
           title: "Erro!",
           text: "Falha no cadastro da sua autoavaliação!",
@@ -200,7 +200,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
                   r="70"
                   stroke={
                     perguntas.filter((q) => q.resposta).length ===
-                    perguntas.length
+                      perguntas.length
                       ? "#4CAF50"
                       : "#ddd"
                   }
@@ -223,7 +223,7 @@ const Autoavaliacao = ({ setor }: { setor: string }) => {
                   {Math.round(
                     (perguntas.filter((q) => q.resposta).length /
                       perguntas.length) *
-                      100,
+                    100,
                   )}
                   %
                 </h2>
