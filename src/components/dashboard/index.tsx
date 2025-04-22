@@ -1,121 +1,131 @@
-import { useEffect, useState } from 'react';
-import Modal from '../../objects/modal';
-import Staff from '../staff';
-import './style.css'
-import Operador from "../operador";
-import {useCookies} from 'react-cookie';
-
-function Dashboard() {
-    const [cookies] = useCookies(['nome', 'cargo', 'login', 'matricula', 'super', 'gestor']);
-    const [logado] = useState({nome:cookies.nome,matricula: cookies.matricula,  login: cookies.login,cargo: cookies.cargo, super: cookies.super, gestor: cookies.gestor});
-  const [subordinados, setSubordinados] = useState([{'avaliacao':false, 'nome':'', 'matricula':0}]);
-  const [modal_avaliacao, setModalAvaliacao] = useState(false);
-  const [nomeAlvo, setNomeAlvo] = useState('');
-  const [matriculaAlvo, setMatriculaAlvo] = useState(0);
-  const [mes, setMes] = useState('');
-  // const [ano, setAno] = useState('');
-  const [avaliacoes, setAvaliacoes] = useState({'media_das_notas':0.0,'notas_media_por_questao':{"Alcance de metas e produtividade da equipe": 0,
-      "Capacidade de adaptação e mudança": 0,
-      "Capacidade de inovação e melhorias nos processos": 0,
-      "Capacidade de liderança e gestão de equipes": 0,
-      "Capacidade de solucionar conflitos internos": 0,
-      "Comprometimento com metas e prazos": 0,
-      "Comunicação clara e objetiva": 0,
-      "Gestão eficiente do time e delegação de tarefas": 0,
-      "Iniciativa e proatividade": 0,
-      "Organização e planejamento estratégico": 0,
-      "Relacionamento interpessoal": 0,
-      "Resolução de problemas e tomada de decisões": 0,
-      "Trabalho em equipe e colaboração": 0
-}});
-
-    if(!cookies.nome){
-        window.location.href = '/';
-    }
-  const api = 'http://127.0.0.1:5000/api/';
-  useEffect(() => {
-    fetch(`${api}subordinates?cargo=${logado.cargo}&login=${logado.login}&matricula=${logado.matricula}`)
-      .then(response => response.json())
-      .then(data =>{
-        setSubordinados(data.data);
-        setMes(data.mes);
-        // setAno(data.ano);
-      });
-      fetch(`${api}avaliacoes?cargo=${logado.cargo}&login=${logado.login}&matricula=${logado.matricula}`)
-      .then(response => response.json())
-      .then(data =>{
-
-        setAvaliacoes(data.data);
-      });
-  }, []);
-
-
-  return (
-    <div>
-      <h1>Bem-vindo! {logado.nome}</h1>
-      <h1>{mes}</h1>
-      <h1>Pendentes: {subordinados.length}</h1>
-
-
-        <main>
-            {logado.cargo != '14936' && logado.cargo != '1066' ?
-
-
-            <div>
-                <h5>Nota media geral:  {avaliacoes.media_das_notas}</h5>
-          <h5>Alcance de metas e produtividade da equipe {avaliacoes.notas_media_por_questao['Alcance de metas e produtividade da equipe']}</h5>
-          <h5>Capacidade de adaptação e mudança {avaliacoes.notas_media_por_questao['Capacidade de adaptação e mudança']}</h5>
-          <h5>Capacidade de inovação e melhorias nos processos {avaliacoes.notas_media_por_questao['Capacidade de inovação e melhorias nos processos']}</h5>
-          <h5>Capacidade de liderança e gestão de equipes {avaliacoes.notas_media_por_questao['Capacidade de liderança e gestão de equipes']}</h5>
-          <h5>Capacidade de solucionar conflitos internos {avaliacoes.notas_media_por_questao['Capacidade de solucionar conflitos internos']}</h5>
-          <h5>Comprometimento com metas e prazos {avaliacoes.notas_media_por_questao['Comprometimento com metas e prazos']}</h5>
-          <h5>Comunicação clara e objetiva {avaliacoes.notas_media_por_questao['Comunicação clara e objetiva']}</h5>
-          <h5>Gestão eficiente do time e delegação de tarefas {avaliacoes.notas_media_por_questao['Gestão eficiente do time e delegação de tarefas']}</h5>
-          <h5>Iniciativa e proatividade {avaliacoes.notas_media_por_questao['Iniciativa e proatividade']}</h5>
-          <h5>Organização e planejamento estratégico {avaliacoes.notas_media_por_questao['Organização e planejamento estratégico']}</h5>
-          <h5>Relacionamento interpessoal {avaliacoes.notas_media_por_questao['Relacionamento interpessoal']}</h5>
-          <h5>Resolução de problemas e tomada de decisões {avaliacoes.notas_media_por_questao['Resolução de problemas e tomada de decisões']}</h5>
-          <h5>Trabalho em equipe e colaboração {avaliacoes.notas_media_por_questao['Trabalho em equipe e colaboração']}</h5>
-
-      </div>
-            :null}
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Mes</th>
-            <th>Ação/Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {subordinados.map((matricula) => (
-
-            <tr key={matricula.matricula}>
-              <td>{matricula.nome}</td>
-              <td>Fevereiro</td>
-              <td>
-              {matricula.avaliacao ? "Avaliado" :
-               <button onClick={() => {
-                setNomeAlvo(matricula.nome);
-                setMatriculaAlvo(matricula.matricula);
-                setModalAvaliacao(true)}}
-                >Avaliar</button>}
-
-                </td>
-
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      </main>
-        {logado.cargo != '14936' && logado.cargo != '1066' ?
-            <Modal isOpen={modal_avaliacao} onClose={() => setModalAvaliacao(false)} children={<Staff matricula={matriculaAlvo} nome={nomeAlvo} />} />
-            :
-            <Modal isOpen={modal_avaliacao} onClose={() => setModalAvaliacao(false)} children={<Operador matricula={matriculaAlvo} nome={nomeAlvo} />} />
-        }
-        </div>
-  );
+import { useEffect, useState } from "react";
+import "./style.css";
+import { useCookies } from "react-cookie";
+import Header from "../../objects/header";
+import Sidebar from "../../objects/sidebar";
+import Autoavaliacao from "../abas/autoavaliacao";
+import Lideranca from "../abas/lideranca";
+import Reports from "../../objects/reports";
+import IndividualReport from "../../objects/reportsIndividual";
+import api from "../../services/api";
+import TeamReport from "../../objects/reportEquipe";
+import LeadershipReport from "../../objects/reportLider";
+import Lideres from "../abas/lideres";
+import Gerenciamento from "../Gerenciamento";
+interface StatusMes {
+	data: {
+		status: string;
+	},
+	message: string;
+	status_code: number;
 }
 
+function Dashboard() {
+	const [cookies] = useCookies([
+		"nome",
+		"cargo",
+		"login",
+		"matricula",
+		"super",
+		"gestor",
+	]);
+	const [logado] = useState({
+		nome: cookies.nome,
+		matricula: cookies.matricula,
+		login: cookies.login,
+		cargo: cookies.cargo,
+		super: cookies.super,
+		gestor: cookies.gestor,
+	});
+
+	const [mes, setMes] = useState("");
+	const [statusTipo2, setStatusTipo2] = useState<string>('');
+	const [statusTipo1, setStatusTipo1] = useState<string>('');
+	const [statusTipo3, setStatusTipo3] = useState<string>('');
+	const [selectedAba, setSelectedAba] = useState<string>('');
+	const [selectedMatricula, setSelectedMatricula] = useState<string>('');
+
+  if (!cookies.nome) {
+    window.location.href = "/playground4/";
+  }
+
+	useEffect(() => {
+		const date = new Date();
+		setMes(date.toLocaleString('pt-BR', { month: 'long' }));
+		const fetchStatusTipo2 = async () => {
+			const response = await fetch(`${api}status_mes?matricula=${logado.matricula}&tipo=2&setor=${logado.cargo}`);
+			const data: StatusMes = await response.json();
+			setStatusTipo2(data.data.status);
+		};
+		const fetchStatusTipo1 = async () => {
+			const response = await fetch(`${api}status_mes?matricula=${logado.matricula}&tipo=1&setor=${logado.cargo}`);
+			const data: StatusMes = await response.json();
+			setStatusTipo1(data.data.status);
+		};
+		const fetchStatusTipo3 = async () => {
+			const response = await fetch(`${api}status_mes?matricula=${logado.matricula}&tipo=3&setor=${logado.cargo}`);
+			const data: StatusMes = await response.json();
+			setStatusTipo3(data.data.status);
+		};
+		fetchStatusTipo2();
+		fetchStatusTipo1();
+		fetchStatusTipo3();
+	}, [logado.cargo, logado.matricula]);
+
+	const handleMenuSelect = (menuItem: string, matricula?: string) => {
+		setSelectedAba(menuItem);
+		if (menuItem === 'relatorio-individual') {
+			const targetMatricula = matricula || logado.matricula;
+			setSelectedMatricula(targetMatricula);
+		}
+	};
+
+	const renderContent = () => {
+		switch (selectedAba) {
+			case 'autoavaliacao':
+				return <Autoavaliacao setor={logado.cargo} />;
+			case 'avaliacao-lideranca':
+				return <Lideranca />;
+			case 'relatorio-geral':
+				return <Reports />;
+			case 'relatorio-individual':
+				return <IndividualReport matricula={selectedMatricula || logado.matricula} />;
+			case 'relatorio-equipe':
+				return <TeamReport login={logado.login} />;
+			case 'relatorio-lideranca':
+				return <LeadershipReport />;
+			case 'avaliacao-lideres':
+				return <Lideres />;
+			case 'gerenciamento':
+				return <Gerenciamento />
+			default:
+				return (
+					<>
+						<h2>Bem-vindo! {logado.nome}</h2>
+						<h2>Selecione uma opção no menu</h2>
+					</>
+				);
+		}
+	};
+
+	return (
+		<>
+			<Header nome={logado.nome} />
+			<main className="main-container">
+				<Sidebar
+					onMenuSelect={handleMenuSelect}
+					mes={mes}
+					statusTipo2={statusTipo2}
+					statusTipo1={statusTipo1}
+					statusTipo3={statusTipo3}
+					matricula={logado.matricula}
+				/>
+				<div className="content">
+					{renderContent()}
+				</div>
+			</main>
+		</>
+	);
+}
 
 export default Dashboard;

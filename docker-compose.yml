@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5004:8080"
+    container_name: Avaliacao
+    restart: unless-stopped

@@ -3,17 +3,24 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "/playground4",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 8080 --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview --port 5003 --host "
+    "preview": "vite preview --port 8080 --host "
   },
   "dependencies": {
+    "@types/axios": "^0.14.4",
+    "axios": "^1.8.2",
+    "html2pdf.js": "^0.10.3",
     "react": "^19.0.0",
     "react-cookie": "^7.2.2",
     "react-cookies": "^0.1.1",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "sweetalert2": "^11.17.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

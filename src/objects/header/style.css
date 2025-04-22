@@ -1,0 +1,41 @@
+header {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    align-items: center;
+    z-index: 8;
+    width: 100vw;
+    height: 10%;
+    background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+}
+
+.header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    gap: 2%;
+    margin-right: 2%;
+}
+
+.header-info h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    text-wrap: nowrap;
+}
+
+
+#sair {
+    cursor: pointer;
+}
+
+.logo {
+    width: auto;
+    height: auto;
+   
+}
+

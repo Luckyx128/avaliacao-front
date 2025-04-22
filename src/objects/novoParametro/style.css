@@ -1,0 +1,44 @@
+#parametros-body button{
+   background: linear-gradient(45deg, var(--primary), var(--secondary));
+   color: white;
+   border: none;
+   border-radius: 12px;
+   padding: 14px 28px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   margin-top: 10px;
+   font-weight: 500;
+   font-size: 1rem;
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+}
+
+#parametros-body label{
+   font-family: var(-font-family);
+   color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  padding: 25px;
+}
+
+#parametros-header button{
+   color: var(--primary);
+   border: solid 2px var(--primary);
+   border-radius: 10px;
+   padding: 5px;
+   margin: 0 5px;
+   background-color: var(--surface);
+}
+#parametros-header .active{
+   color: var(--surface);
+   background: linear-gradient(45deg, var(--primary), var(--secondary));
+   border: none;
+   padding: 7px;
+}
+
+#parametros-header button:hover{
+   transform: translateY(-2px);
+   box-shadow: 0 4px 12px rgba(0,90,245,0.2);
+}
+

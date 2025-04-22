@@ -6,18 +6,18 @@ WORKDIR /usr/src/app
 
 # Copiar arquivos de dependências e instalá-las
 COPY package*.json ./
-RUN yarn install
+RUN npm install
 
 # Copiar o código da aplicação
 COPY . .
 
 # Construir a aplicação
-RUN yarn run build
-RUN yarn global add serve
+RUN npm run build
+
 
 
 # Expor a porta usada pela aplicação React
-EXPOSE 3000
+EXPOSE 8080
 
 # Rodar a aplicação
-CMD ["serve", "--ssl-cert", ".cert/cert.pem", "--ssl-key", ".cert/key.pem", "./build/"]
+CMD ["npm","run","preview"]

@@ -1,22 +1,22 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
-import Dashboard from './components/dashboard';
-import Inicio from './components/inicio';
-import {CookiesProvider} from 'react-cookie';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Dashboard from "./components/dashboard";
+import Inicio from "./components/inicio";
+import { CookiesProvider } from "react-cookie";
+import Gerenciamento from './components/Gerenciamento'
 function App() {
-
   return (
-    <BrowserRouter>
-    <CookiesProvider>
-      <Routes>
+    <BrowserRouter  basename="/playground4">
+      <CookiesProvider>
 
-        <Route path="/" element={<Inicio/>} />
-        <Route path="/dashboard" element={<Dashboard /> } />
-      </Routes>
-      {/* <Inicio /> */}
-    </CookiesProvider>
-    </BrowserRouter>
-  )
+				<Routes>
+					<Route path="/" element={<Inicio />} />
+					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="/gerenciamento" element={<Gerenciamento />} />
+				</Routes>
+			</CookiesProvider>
+		</BrowserRouter>
+	);
 }
 
-export default App
+export default App;
