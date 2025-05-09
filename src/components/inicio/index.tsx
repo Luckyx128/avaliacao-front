@@ -4,22 +4,22 @@ import { useCookies } from "react-cookie";
 import "./style.css";
 import api from "../../services/api";
 interface LoginResponse {
-	status_code: number;
-	data: {
-		nome: string;
-		cargo: string;
-		login: string;
-		matricula: string;
-		super: boolean;
-		gestor: boolean;
-		setor_nome: string;
-	};
+  status_code: number;
+  data: {
+    nome: string;
+    cargo: string;
+    login: string;
+    matricula: string;
+    super: boolean;
+    gestor: boolean;
+    setor_nome: string;
+  };
 }
 
 interface FormData {
-	username: string;
-	password: string;
-	cpf?: string;
+  username: string;
+  password: string;
+  cpf?: string;
 }
 
 function Inicio() {
@@ -30,7 +30,7 @@ function Inicio() {
     "matricula",
     "super",
     "gestor",
-    "setor_nome"
+    "setor_nome",
   ]);
   const [logar, setLogar] = useState(true);
   const [erro, setErro] = useState("");
@@ -38,7 +38,6 @@ function Inicio() {
   const [isLoading, setIsLoading] = useState(false);
 
   const setCookies = (data: LoginResponse["data"]) => {
-
     const cookieOptions = { path: "/", maxAge: 3600 }; // 1 hour expiration
     setCookie("nome", data.nome, cookieOptions);
     setCookie("cargo", data.cargo, cookieOptions);
@@ -79,7 +78,7 @@ function Inicio() {
         setErroReset("Erro ao resetar senha. Verifique suas credenciais.");
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       setErroReset("Erro ao conectar com o servidor");
     } finally {
       setIsLoading(false);
@@ -107,7 +106,7 @@ function Inicio() {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json() as LoginResponse;
+      const result = (await response.json()) as LoginResponse;
 
       if (result.status_code === 200) {
         setCookies(result.data);
@@ -116,7 +115,7 @@ function Inicio() {
         setErro("Matrícula ou senha incorreta");
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       setErro("Erro ao conectar com o servidor");
     } finally {
       setIsLoading(false);
@@ -125,7 +124,7 @@ function Inicio() {
 
   const LoginForm = () => (
     <form onSubmit={handleLogin} id="login-form" method="post">
-      <h1>Auto Avaliação</h1>
+      <h1>Avaliação 180°</h1>
       <InputInicio
         placeholder="Matricula plansul"
         id="matricula-plansul"

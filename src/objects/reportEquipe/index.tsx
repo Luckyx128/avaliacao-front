@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
-import api from '../../services/api';
-import './style.css';
-import ColaboradorSearch from '../colaboradorSearch';
-import html2pdf from 'html2pdf.js';
+import React, { useEffect, useState, useRef } from "react";
+import api from "../../services/api";
+import "./style.css";
+import ColaboradorSearch from "../colaboradorSearch";
+import html2pdf from "html2pdf.js";
 
-
-interface tipoP{
+interface tipoP {
   [key: string]: { media: number };
 }
-interface tipo23{
+interface tipo23 {
   assunto: string;
   data: string;
   nota: number;
@@ -62,6 +61,21 @@ interface TeamReportProps {
 }
 
 const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
+  const meses = [
+    { key: 1, value: "Janeiro" },
+    { key: 2, value: "Fevereiro" },
+    { key: 3, value: "Março" },
+    { key: 4, value: "Abril" },
+    { key: 5, value: "Maio" },
+    { key: 6, value: "Junho" },
+    { key: 7, value: "Julho" },
+    { key: 8, value: "Agosto" },
+    { key: 9, value: "Setembro" },
+    { key: 10, value: "Outubro" },
+    { key: 11, value: "Novembro" },
+    { key: 12, value: "Dezembro" },
+  ];
+  const [mesSelecionado, setMesSelecionado] = useState<string | null>(null);
   const reportRef = useRef<HTMLDivElement>(null);
   const [data, setData] = useState<EquipeData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -71,18 +85,20 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`${api}relatorios/equipe/${targetLogin}`);
+      const response = await fetch(
+        `${api}relatorios/equipe/${targetLogin}?mes=${mesSelecionado}`
+      );
       const result = await response.json();
-      
+
       if (result.status_code === 404) {
-        setError('Nenhuma equipe encontrada');
+        setError("Nenhuma equipe encontrada");
         setData(null);
       } else {
         setData(result.data);
       }
     } catch (error) {
-      console.error('Erro ao carregar dados:', error);
-      setError('Erro ao carregar dados da equipe');
+      console.error("Erro ao carregar dados:", error);
+      setError("Erro ao carregar dados da equipe");
     } finally {
       setLoading(false);
     }
@@ -93,10 +109,10 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
       const element = reportRef.current;
       const opt = {
         margin: 1,
-        filename: `relatorio_equipe_${data?.gestor_nome || 'equipe'}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
+        filename: `relatorio_equipe_${data?.gestor_nome || "equipe"}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a2', orientation: 'landscape' }
+        jsPDF: { unit: "in", format: "a2", orientation: "landscape" },
       };
 
       html2pdf().set(opt).from(element).save();
@@ -105,7 +121,7 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
 
   useEffect(() => {
     fetchData(login);
-  }, [login]);
+  }, [login, mesSelecionado]);
 
   return (
     <div className="team-report" ref={reportRef}>
@@ -114,24 +130,40 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
           Gerar PDF
         </button>
       </div>
-      
-      <ColaboradorSearch 
-        onSelectNome={(novoLogin) => {
-          setData(null);
-          fetchData(novoLogin);
-        }}
-        onSelect={(novoLogin) => {
-          setData(null);
-          fetchData(novoLogin);
-        }}
-        currentMatricula={login}
-        searchType="lideranca"
-        apiEndpoint="colaboradores/busca-lideranca"
-        placeholder="Buscar gestor ou supervisor..."
-      />
-      
+      <section className="filters">
+        <ColaboradorSearch
+          onSelectNome={(novoLogin) => {
+            setData(null);
+            fetchData(novoLogin);
+          }}
+          onSelect={(novoLogin) => {
+            setData(null);
+            fetchData(novoLogin);
+          }}
+          currentMatricula={login}
+          searchType="lideranca"
+          apiEndpoint="colaboradores/busca-lideranca"
+          placeholder="Buscar gestor ou supervisor..."
+        />
+        <div className="reports-filters">
+          <select
+            className="period-select"
+            onChange={async (e) => {
+              setMesSelecionado(e.target.value);
+            }}
+          >
+            <option value="">Selecione um mês</option>
+            {meses.map((mes) => (
+              <option key={mes.key} value={mes.value}>
+                {mes.value}
+              </option>
+            ))}
+          </select>
+        </div>
+      </section>
+
       {loading && <div className="loading">Carregando...</div>}
-      
+
       {error && (
         <div className="empty-state">
           <div className="empty-state-content">
@@ -147,13 +179,21 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
             <div className="equipe-info">
               <h1>Equipe {data.gestor_nome}</h1>
               <span className="stats">
-                {data.total_colaboradores} colaboradores | {Object.values(data.por_colaborador).filter(c => c.total_avaliacoes > 0).length} avaliados
+                {data.total_colaboradores} colaboradores |{" "}
+                {
+                  Object.values(data.por_colaborador).filter(
+                    (c) => c.total_avaliacoes > 0
+                  ).length
+                }{" "}
+                avaliados
               </span>
             </div>
             <div className="header-actions">
               <div className="media-geral">
                 <span className="label">Média da Equipe</span>
-                <span className="value">{data.media_geral_equipe.toFixed(1)}</span>
+                <span className="value">
+                  {data.media_geral_equipe.toFixed(1)}
+                </span>
               </div>
               <button onClick={handleGeneratePDF} className="btn-pdf">
                 Exportar PDF
@@ -165,70 +205,117 @@ const TeamReport: React.FC<TeamReportProps> = ({ login }) => {
             <div className="metricas-section">
               <h2>Métricas por Assunto</h2>
               <div className="assuntos-grid">
-                {Object.entries(data.por_assunto).map(([assunto, { media }]) => (
-                  <div key={assunto} className="assunto-card">
-                    <h3>{assunto}</h3>
-                    <div className={`nota nota-${Math.floor(media)}`}>
-                      {media.toFixed(1)}
+                {Object.entries(data.por_assunto).map(
+                  ([assunto, { media }]) => (
+                    <div key={assunto} className="assunto-card">
+                      <h3>{assunto}</h3>
+                      <div className={`nota nota-${Math.floor(media)}`}>
+                        {media.toFixed(1)}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </div>
 
             <div className="colaboradores-section">
               <h2>Colaboradores</h2>
               <div className="colaboradores-grid">
-                {Object.entries(data.por_colaborador).map(([matricula, colaborador]) => (
-                  <div key={matricula} className={`colaborador-card ${colaborador.total_avaliacoes === 0 ? 'pendente' : ''}`}>
-                    <div className="colaborador-header">
-                      <div className="colaborador-info">
-                        <h3>{colaborador.nome}</h3>
-                        <span className="setor">{colaborador.setor_nome}</span>
-                      </div>
-                      <div className="status">
-                        {colaborador.total_avaliacoes > 0 ? (
-                          <span className="media">{colaborador.media.toFixed(1)}</span>
-                        ) : (
-                          <span className="pendente">Pendente</span>
-                        )}
-                      </div>
-                    </div>
-                    {colaborador.total_avaliacoes > 0 && (
-                      <div className="avaliacoes-container">
-                        <div className="avaliacao-section">
-                          <div className="historico-header">
-                            <span>Assunto</span>
-                            <span>Operador</span>
-                            <span>Auto</span>
-                            <span>Coordenador</span>
-                          </div>
-                          <div className="historico-preview">
-                            {Object.keys({...colaborador.historico.tipo_1, 
-                              ...Object.fromEntries(colaborador.historico.tipo_2.map(h => [h.assunto, h])),
-                              ...Object.fromEntries(colaborador.historico.tipo_3.map(h => [h.assunto, h]))
-                            }).map(assunto => (
-                              <div key={assunto} className="historico-item">
-                                <span className="assunto">{assunto}</span>
-                                <div className="notas-container">
-                                  <span className={`nota nota-${Math.floor(colaborador.historico.tipo_1[assunto]?.media || 0)}`}>
-                                    {colaborador.historico.tipo_1[assunto]?.media?.toFixed(1) || '-'}
-                                  </span>
-                                  <span className={`nota nota-${Math.floor(colaborador.historico.tipo_2.find(h => h.assunto === assunto)?.nota || 0)}`}>
-                                    {colaborador.historico.tipo_2.find(h => h.assunto === assunto)?.nota?.toFixed(1) || '-'}
-                                  </span>
-                                  <span className={`nota nota-${Math.floor(colaborador.historico.tipo_3.find(h => h.assunto === assunto)?.nota || 0)}`}>
-                                    {colaborador.historico.tipo_3.find(h => h.assunto === assunto)?.nota?.toFixed(1) || '-'}
-                                  </span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
+                {Object.entries(data.por_colaborador).map(
+                  ([matricula, colaborador]) => (
+                    <div
+                      key={matricula}
+                      className={`colaborador-card ${
+                        colaborador.total_avaliacoes === 0 ? "pendente" : ""
+                      }`}
+                    >
+                      <div className="colaborador-header">
+                        <div className="colaborador-info">
+                          <h3>{colaborador.nome}</h3>
+                          <span className="setor">
+                            {colaborador.setor_nome}
+                          </span>
+                        </div>
+                        <div className="status">
+                          {colaborador.total_avaliacoes > 0 ? (
+                            <span className="media">
+                              {colaborador.media.toFixed(1)}
+                            </span>
+                          ) : (
+                            <span className="pendente">Pendente</span>
+                          )}
                         </div>
                       </div>
-                    )}
-                  </div>
-                ))}
+                      {colaborador.total_avaliacoes > 0 && (
+                        <div className="avaliacoes-container">
+                          <div className="avaliacao-section">
+                            <div className="historico-header">
+                              <span>Assunto</span>
+                              <span>Operador</span>
+                              <span>Auto</span>
+                              <span>Coordenador</span>
+                            </div>
+                            <div className="historico-preview">
+                              {Object.keys({
+                                ...colaborador.historico.tipo_1,
+                                ...Object.fromEntries(
+                                  colaborador.historico.tipo_2.map((h) => [
+                                    h.assunto,
+                                    h,
+                                  ])
+                                ),
+                                ...Object.fromEntries(
+                                  colaborador.historico.tipo_3.map((h) => [
+                                    h.assunto,
+                                    h,
+                                  ])
+                                ),
+                              }).map((assunto) => (
+                                <div key={assunto} className="historico-item">
+                                  <span className="assunto">{assunto}</span>
+                                  <div className="notas-container">
+                                    <span
+                                      className={`nota nota-${Math.floor(
+                                        colaborador.historico.tipo_1[assunto]
+                                          ?.media || 0
+                                      )}`}
+                                    >
+                                      {colaborador.historico.tipo_1[
+                                        assunto
+                                      ]?.media?.toFixed(1) || "-"}
+                                    </span>
+                                    <span
+                                      className={`nota nota-${Math.floor(
+                                        colaborador.historico.tipo_2.find(
+                                          (h) => h.assunto === assunto
+                                        )?.nota || 0
+                                      )}`}
+                                    >
+                                      {colaborador.historico.tipo_2
+                                        .find((h) => h.assunto === assunto)
+                                        ?.nota?.toFixed(1) || "-"}
+                                    </span>
+                                    <span
+                                      className={`nota nota-${Math.floor(
+                                        colaborador.historico.tipo_3.find(
+                                          (h) => h.assunto === assunto
+                                        )?.nota || 0
+                                      )}`}
+                                    >
+                                      {colaborador.historico.tipo_3
+                                        .find((h) => h.assunto === assunto)
+                                        ?.nota?.toFixed(1) || "-"}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )
+                )}
               </div>
             </div>
 
